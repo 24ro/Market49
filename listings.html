@@ -1,10 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market49 — Browse Listings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body class="page-wrapper">
+
+<!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">Market<span>49</span></a>
+    <div class="nav-search">
+      <input type="text" placeholder="Search Listings..." id="searchInput" aria-label="Search listings" />
+    </div>
+    <div class="nav-right">
+      <a href="listings.html" class="nav-cart">🛒</a>
+      <a href="#" class="nav-signin">Sign In</a>
+      <div class="toggle-pill" id="darkToggle">
+        <div class="knob"></div>
+      </div>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 Home</a>
+    <a href="listings.html">🔍 Browse Listings</a>
+    <a href="listing.html">📦 Post a Listing</a>
+    <a href="#">👤 Sign In</a>
+    <a href="listings.html">🛒 Cart</a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main style="flex:1;">
+    <h2 class="section-title" id="resultsHeading">Browse Listings</h2>
+
+    <div class="listings-grid">
+
+      <a href="listing-detail.html" class="card">
+        <div class="card-img">
+          <img src="https://placehold.co/400x300/e0e0e0/666?text=Textbook" alt="Calculus Textbook" />
+        </div>
+        <div class="card-body">
+          <p class="card-name">Calculus Textbook, 3rd Ed.</p>
+          <p class="card-price">$35.00</p>
+        </div>
+        <div class="card-footer">
+          <span></span>
+          <div class="card-actions">
+            <button class="like-btn">🤍</button>
+            <button class="delete-btn">🗑</button>
+          </div>
+        </div>
+      </a>
+
+      <a href="listing-detail.html" class="card">
+        <div class="card-img">
+          <img src="https://placehold.co/400x300/e0e0e0/666?text=Keyboard" alt="Mechanical Keyboard" />
+        </div>
+        <div class="card-body">
+          <p class="card-name">Mechanical Keyboard</p>
+          <p class="card-price">$60.00</p>
+        </div>
+        <div class="card-footer">
+          <span></span>
+          <div class="card-actions">
+            <button class="like-btn">🤍</button>
+            <button class="delete-btn">🗑</button>
+          </div>
+        </div>
+      </a>
+
+      <a href="listing-detail.html" class="card">
+        <div class="card-img">
+          <img src="https://placehold.co/400x300/e0e0e0/666?text=HDMI+Cable" alt="HDMI Cable" />
+        </div>
+        <div class="card-body">
+          <p class="card-name">HDMI Cable 6ft</p>
+          <p class="card-price">$12.00</p>
+        </div>
+        <div class="card-footer">
+          <span></span>
+          <div class="card-actions">
+            <button class="like-btn">🤍</button>
+            <button class="delete-btn">🗑</button>
+          </div>
+        </div>
+      </a>
+
+      <a href="listing-detail.html" class="card">
+        <div class="card-img">
+          <img src="https://placehold.co/400x300/e0e0e0/666?text=Desk+Lamp" alt="Desk Lamp" />
+        </div>
+        <div class="card-body">
+          <p class="card-name">Adjustable Desk Lamp</p>
+          <p class="card-price">$25.00</p>
+        </div>
+        <div class="card-footer">
+          <span></span>
+          <div class="card-actions">
+            <button class="like-btn">🤍</button>
+            <button class="delete-btn">🗑</button>
+          </div>
+        </div>
+      </a>
+
+      <a href="listing-detail.html" class="card">
+        <div class="card-img">
+          <img src="https://placehold.co/400x300/e0e0e0/666?text=Backpack" alt="Backpack" />
+        </div>
+        <div class="card-body">
+          <p class="card-name">North Face Backpack</p>
+          <p class="card-price">$45.00</p>
+        </div>
+        <div class="card-footer">
+          <span></span>
+          <div class="card-actions">
+            <button class="like-btn">🤍</button>
+            <button class="delete-btn">🗑</button>
+          </div>
+        </div>
+      </a>
+
+      <a href="listing-detail.html" class="card">
+        <div class="card-img">
+          <img src="https://placehold.co/400x300/e0e0e0/666?text=Monitor" alt="Monitor" />
+        </div>
+        <div class="card-body">
+          <p class="card-name">24" Monitor</p>
+          <p class="card-price">$120.00</p>
+        </div>
+        <div class="card-footer">
+          <span></span>
+          <div class="card-actions">
+            <button class="like-btn">🤍</button>
+            <button class="delete-btn">🗑</button>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+    <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#">Help Center</a>
+      <a href="contact.html">Contact</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+    </div>
+    <p>© 2026 Market49</p>
+  </footer>
+
+  <script src="js/script.js"></script>
 
 </body>
 </html>
