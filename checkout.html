@@ -2,9 +2,289 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — Market49</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- ======= NAV BAR ======= -->
+<nav class="navbar">
+    <a href="index.html" class="logo">Market<span>49</span></a>
+    <div class="nav-search">
+        <input type="text" placeholder="Search listings..."
+               id="search-input">
+        <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+        <a href="cart.html" aria-label="Cart">
+            <svg class="cart-icon" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0
+                 002-2V6l-3-4z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6"
+                      stroke-linecap="round"/>
+                <path d="M16 10a4 4 0 01-8 0"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a href="signin.html">Sign In</a>
+        <div class="toggle-pill" id="dark-toggle">
+            <div class="toggle-dot"></div>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+</nav>
+
+<!-- ======= MOBILE MENU ======= -->
+<div class="mobile-menu" id="mobile-menu">
+    <button class="close-menu" id="close-menu">&#10005;</button>
+    <a href="index.html">Home</a>
+    <a href="listings.html">Browse Listings</a>
+    <a href="cart.html">Cart</a>
+    <a href="post-listing.html">Post a Listing</a>
+    <a href="manage-listings.html">My Listings</a>
+    <a href="signin.html">Sign In</a>
+</div>
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<!-- ======= PAGE CONTENT ======= -->
+<main class="checkout-page">
+
+    <h1>Checkout</h1>
+
+    <!-- Breadcrumb — shows current step -->
+    <div class="breadcrumb">
+        <span class="active">Shipping</span>
+        <span class="arrow">&#8594;</span>
+        <span>Payment</span>
+        <span class="arrow">&#8594;</span>
+        <span>Review</span>
+    </div>
+
+    <div class="checkout-layout">
+
+        <!-- Left column: form -->
+        <div class="checkout-form">
+            <form id="checkout-form">
+
+                <p class="section-title">Shipping / Pickup</p>
+
+                <!-- Name and contact side by side on desktop -->
+                <div class="form-row">
+                    <div class="field-group">
+                        <label for="full-name">Full Name</label>
+                        <input
+                                id="full-name"
+                                class="input-field"
+                                type="text"
+                                placeholder="Full name"
+                        >
+                        <span id="name-error" class="error-msg">
+                            This field is required
+                        </span>
+                    </div>
+                    <div class="field-group">
+                        <label for="contact">Phone / Email</label>
+                        <input
+                                id="contact"
+                                class="input-field"
+                                type="text"
+                                placeholder="Phone or email"
+                        >
+                        <span id="contact-error" class="error-msg">
+                            This field is required
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="address">Street Address</label>
+                    <input
+                            id="address"
+                            class="input-field"
+                            type="text"
+                            placeholder="Street address"
+                    >
+                </div>
+
+                <!-- City, State, ZIP in a row -->
+                <div class="form-row">
+                    <div class="field-group">
+                        <label for="city">City</label>
+                        <input
+                                id="city"
+                                class="input-field"
+                                type="text"
+                                placeholder="City"
+                        >
+                    </div>
+                    <div class="field-group">
+                        <label for="state">State</label>
+                        <input
+                                id="state"
+                                class="input-field"
+                                type="text"
+                                placeholder="State"
+                        >
+                    </div>
+                    <div class="field-group">
+                        <label for="zip">ZIP</label>
+                        <input
+                                id="zip"
+                                class="input-field"
+                                type="text"
+                                placeholder="ZIP"
+                        >
+                    </div>
+                </div>
+
+                <!-- Delivery vs local pickup selector -->
+                <div class="field-group">
+                    <label>Delivery Method</label>
+                    <div class="pickup-toggle">
+                        <!-- JS can toggle active class between these -->
+                        <button type="button"
+                                class="btn-primary pickup-btn active"
+                                id="delivery-btn">
+                            Delivery
+                        </button>
+                        <button type="button"
+                                class="btn-secondary pickup-btn"
+                                id="pickup-btn">
+                            Local Pickup
+                        </button>
+                    </div>
+                </div>
+
+                <p class="section-title">Payment</p>
+
+                <div class="field-group">
+                    <label for="card-number">Card Number</label>
+                    <input
+                            id="card-number"
+                            class="input-field"
+                            type="text"
+                            placeholder="Card number"
+                    >
+                    <span id="card-error" class="error-msg">
+                        This field is required
+                    </span>
+                </div>
+
+                <!-- Expiry, CVC, name in a row -->
+                <div class="form-row">
+                    <div class="field-group">
+                        <label for="expiry">MM/YY</label>
+                        <input
+                                id="expiry"
+                                class="input-field"
+                                type="text"
+                                placeholder="MM/YY"
+                        >
+                    </div>
+                    <div class="field-group">
+                        <label for="cvc">CVC</label>
+                        <input
+                                id="cvc"
+                                class="input-field"
+                                type="text"
+                                placeholder="CVC"
+                        >
+                    </div>
+                    <div class="field-group">
+                        <label for="card-name">Name on Card</label>
+                        <input
+                                id="card-name"
+                                class="input-field"
+                                type="text"
+                                placeholder="Name on card"
+                        >
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="notes">Notes to Seller (optional)</label>
+                    <textarea
+                            id="notes"
+                            class="input-field"
+                            rows="3"
+                            placeholder="e.g. I can meet after 5pm..."
+                    ></textarea>
+                </div>
+
+                <!-- Back goes to listings, Place Order validates then confirms -->
+                <div class="form-actions">
+                    <a href="cart.html" class="btn-secondary">
+                        Back to Cart
+                    </a>
+                    <button type="submit" class="btn-primary">
+                        Place Order
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Right column: order summary -->
+        <div class="order-summary">
+
+            <h2>Order Summary</h2>
+
+            <!-- Item preview -->
+            <div class="order-item">
+                <div class="order-item-img"></div>
+                <div class="order-item-info">
+                    <p>Calculus Textbook</p>
+                    <p>Qty: 1</p>
+                </div>
+                <p class="order-item-price">$35.00</p>
+            </div>
+
+            <div class="order-row">
+                <span>Item subtotal</span>
+                <span>$35.00</span>
+            </div>
+            <div class="order-row">
+                <span>Service fee</span>
+                <span>$2.00</span>
+            </div>
+            <div class="order-row">
+                <span>Shipping</span>
+                <span>$5.00</span>
+            </div>
+            <div class="order-total">
+                <span>Total</span>
+                <span>$42.00</span>
+            </div>
+
+            <button class="btn-secondary" style="width:100%">
+                Apply Promo Code
+            </button>
+
+            <p style="font-size:11px;color:var(--text-muted);
+               text-align:center;margin-top:12px;">
+                By placing your order, you agree to the Terms.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+<!-- ======= FOOTER ======= -->
+<footer>
+    <p>Help Center | Contact | Sign In | FAQs |
+        Terms of Service | Privacy Policy</p>
+    <p>© 2026 Market49</p>
+</footer>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>

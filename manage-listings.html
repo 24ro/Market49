@@ -2,9 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Listings — Market49</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- ======= NAV BAR ======= -->
+<nav class="navbar">
+    <a href="index.html" class="logo">Market<span>49</span></a>
+    <div class="nav-search">
+        <input type="text" placeholder="Search listings..."
+               id="search-input">
+        <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+        <a href="cart.html" aria-label="Cart">
+            <svg class="cart-icon" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0
+                 002-2V6l-3-4z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6"
+                      stroke-linecap="round"/>
+                <path d="M16 10a4 4 0 01-8 0"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a href="signin.html">Sign In</a>
+        <div class="toggle-pill" id="dark-toggle">
+            <div class="toggle-dot"></div>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+</nav>
+
+<!-- ======= MOBILE MENU ======= -->
+<div class="mobile-menu" id="mobile-menu">
+    <button class="close-menu" id="close-menu">&#10005;</button>
+    <a href="index.html">Home</a>
+    <a href="listings.html">Browse Listings</a>
+    <a href="cart.html">Cart</a>
+    <a href="post-listing.html">Post a Listing</a>
+    <a href="manage-listings.html">My Listings</a>
+    <a href="signin.html">Sign In</a>
+</div>
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<!-- ======= PAGE CONTENT ======= -->
+<main class="manage-page">
+
+    <!-- Header with title and new listing button -->
+    <div class="manage-header">
+        <div>
+            <h1>My Listings</h1>
+            <p>Manage your active listings</p>
+        </div>
+        <!-- New listing button navigates to post-listing -->
+        <a href="post-listing.html" class="btn-primary">
+            + New Listing
+        </a>
+    </div>
+
+    <!-- Listing rows -->
+    <div class="manage-list">
+
+        <div class="listing-row">
+            <div class="row-img"></div>
+            <div class="row-info">
+                <p class="row-name">Calculus Textbook</p>
+                <p class="row-price">$35.00</p>
+            </div>
+            <span class="badge">Active</span>
+            <div class="row-icons">
+                <i class="fa-solid fa-star star-icon"></i>
+                <i class="fa-solid fa-trash delete-icon"></i>
+            </div>
+        </div>
+
+        <div class="listing-row">
+            <div class="row-img"></div>
+            <div class="row-info">
+                <p class="row-name">Mechanical Keyboard</p>
+                <p class="row-price">$60.00</p>
+            </div>
+            <span class="badge">Active</span>
+            <div class="row-icons">
+                <i class="fa-solid fa-star star-icon"></i>
+                <i class="fa-solid fa-trash delete-icon"></i>
+            </div>
+        </div>
+
+        <div class="listing-row">
+            <div class="row-img"></div>
+            <div class="row-info">
+                <p class="row-name">Desk Lamp</p>
+                <p class="row-price">$25.00</p>
+            </div>
+            <span class="badge">Active</span>
+            <div class="row-icons">
+                <i class="fa-solid fa-star star-icon"></i>
+                <i class="fa-solid fa-trash delete-icon"></i>
+            </div>
+        </div>
+
+        <div class="listing-row">
+            <div class="row-img"></div>
+            <div class="row-info">
+                <p class="row-name">HDMI Cable</p>
+                <p class="row-price">$12.00</p>
+            </div>
+            <span class="badge">Active</span>
+            <div class="row-icons">
+                <i class="fa-solid fa-star star-icon"></i>
+                <i class="fa-solid fa-trash delete-icon"></i>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<!-- ======= FOOTER ======= -->
+<footer>
+    <p>Help Center | Contact | Sign In | FAQs |
+        Terms of Service | Privacy Policy</p>
+    <p>© 2026 Market49</p>
+</footer>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>

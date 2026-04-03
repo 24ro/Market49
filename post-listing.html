@@ -2,9 +2,214 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Listing — Market49</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- ======= NAV BAR ======= -->
+<nav class="navbar">
+    <a href="index.html" class="logo">Market<span>49</span></a>
+    <div class="nav-search">
+        <input type="text" placeholder="Search listings..."
+               id="search-input">
+        <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+        <a href="cart.html" aria-label="Cart">
+            <svg class="cart-icon" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0
+             002-2V6l-3-4z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6"
+                      stroke-linecap="round"/>
+                <path d="M16 10a4 4 0 01-8 0"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a href="signin.html">Sign In</a>
+        <div class="toggle-pill" id="dark-toggle">
+            <div class="toggle-dot"></div>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+</nav>
+
+<!-- ======= MOBILE MENU ======= -->
+<div class="mobile-menu" id="mobile-menu">
+    <button class="close-menu" id="close-menu">&#10005;</button>
+    <a href="index.html">Home</a>
+    <a href="listings.html">Browse Listings</a>
+    <a href="cart.html">Cart</a>
+    <a href="post-listing.html">Post a Listing</a>
+    <a href="manage-listings.html">My Listings</a>
+    <a href="signin.html">Sign In</a>
+</div>
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<!-- ======= PAGE CONTENT ======= -->
+<main class="post-page">
+
+    <div class="post-header">
+        <h1>Post a Listing</h1>
+        <p>Fill out the details below to list your item on Market49.</p>
+    </div>
+
+    <form id="post-listing-form" class="post-form">
+
+        <!-- Title and Price side by side on desktop,
+             stacked on mobile -->
+        <div class="form-row">
+
+            <div class="field-group">
+                <label for="title">Title</label>
+                <input
+                        id="title"
+                        class="input-field"
+                        type="text"
+                        placeholder="e.g. Calculus Textbook"
+                        autocomplete="off"
+                >
+                <!-- Error shown by JS when field is empty on submit -->
+                <span id="title-error" class="error-msg">
+            This field is required
+          </span>
+            </div>
+
+            <div class="field-group">
+                <label for="price">Price ($)</label>
+                <input
+                        id="price"
+                        class="input-field"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                >
+                <span id="price-error" class="error-msg">
+            This field is required
+          </span>
+            </div>
+
+        </div>
+
+        <!-- Category dropdown -->
+        <div class="field-group">
+            <label for="category">Category</label>
+            <select id="category" class="input-field">
+                <option value="" disabled selected>Select a category</option>
+                <option value="textbooks">Textbooks</option>
+                <option value="electronics">Electronics</option>
+                <option value="furniture">Furniture</option>
+                <option value="clothing">Clothing</option>
+                <option value="supplies">School Supplies</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <!-- Photo upload area -->
+        <!-- Clicking the box triggers the hidden file input -->
+        <div class="field-group">
+            <label>Photo</label>
+            <div
+                    class="upload-box"
+                    id="upload-box"
+                    onclick="document.getElementById('file-input').click()"
+            >
+                 <span id="photo-error" class="error-msg">A photo is required </span>
+
+                <!-- Icon and label inside upload box -->
+                <div class="upload-icon">&#128247;</div>
+                <p class="upload-label">Click to upload a photo</p>
+                <p class="upload-hint">JPG, PNG up to 10MB</p>
+
+                <!-- Hidden — clicking upload-box triggers this -->
+                <input
+                        type="file"
+                        id="file-input"
+                        accept="image/*"
+                        hidden
+                >
+            </div>
+            <!-- File name shown here after user picks a file -->
+            <p class="upload-name" id="upload-name"></p>
+        </div>
+
+        <!-- Condition selector — pill buttons -->
+        <div class="field-group">
+            <label>Condition</label>
+            <div class="condition-options">
+                <!-- JS handles the active state on these buttons -->
+                <button type="button" class="condition-btn active"
+                        data-value="new">New</button>
+                <button type="button" class="condition-btn"
+                        data-value="like-new">Like New</button>
+                <button type="button" class="condition-btn"
+                        data-value="good">Good</button>
+                <button type="button" class="condition-btn"
+                        data-value="fair">Fair</button>
+            </div>
+        </div>
+
+        <!-- Description text area -->
+        <div class="field-group">
+            <label for="description">Description</label>
+            <textarea
+                    id="description"
+                    class="input-field"
+                    rows="5"
+                    placeholder="Describe your item — include details like edition, brand, or any wear..."
+            ></textarea>
+            <span id="desc-error" class="error-msg">
+          This field is required
+        </span>
+        </div>
+
+        <!-- Pickup / delivery preference -->
+        <div class="field-group">
+            <label>Preferred Exchange Method</label>
+            <div class="exchange-options">
+                <label class="exchange-option">
+                    <input type="radio" name="exchange"
+                           value="local" checked>
+                    <span>Local Pickup</span>
+                </label>
+                <label class="exchange-option">
+                    <input type="radio" name="exchange" value="delivery">
+                    <span>Delivery</span>
+                </label>
+                <label class="exchange-option">
+                    <input type="radio" name="exchange" value="both">
+                    <span>Either</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Form action buttons -->
+        <div class="form-actions">
+            <!-- Cancel goes back without saving -->
+            <a href="listings.html" class="btn-secondary">Cancel</a>
+            <!-- Submit triggers validation in post-listing.js -->
+            <button type="submit" class="btn-primary">Post Listing</button>
+        </div>
+
+    </form>
+
+</main>
+
+<!-- ======= FOOTER ======= -->
+<footer>
+    <p>Help Center | Contact | Sign In | FAQs |
+        Terms of Service | Privacy Policy</p>
+    <p>© 2026 Market49</p>
+</footer>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>

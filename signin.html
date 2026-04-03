@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed — Market49</title>
+    <title>Sign In — Market49</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
@@ -19,7 +19,7 @@
         <div class="search-dropdown" id="search-dropdown"></div>
     </div>
     <div class="nav-actions">
-        <a href="cart.html" aria-label="Cart">
+        <a href="listings.html" aria-label="Cart">
             <svg class="cart-icon" viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0
@@ -53,19 +53,65 @@
 <div class="menu-overlay" id="menu-overlay"></div>
 
 <!-- ======= PAGE CONTENT ======= -->
-<main class="confirmation-page">
+<main class="signin-page">
 
-    <!-- Green circle checkmark -->
-    <div class="confirmation-icon">&#10003;</div>
+    <div class="signin-card">
 
-    <h1>Order Confirmed!</h1>
+        <h1>Welcome Back</h1>
+        <p>Sign in to your Market49 account</p>
 
-    <p>Your item will be ready for pickup or delivery soon.</p>
+        <form id="signin-form">
 
-    <!-- Back to home -->
-    <a href="index.html" class="btn-primary">
-        Back to Home
-    </a>
+            <div class="field-group">
+                <label for="email">Email</label>
+                <input
+                        id="email"
+                        class="input-field"
+                        type="email"
+                        placeholder="you@university.edu"
+                        autocomplete="email"
+                >
+                <span id="email-error" class="error-msg">
+                    This field is required
+                </span>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input
+                        id="password"
+                        class="input-field"
+                        type="password"
+                        placeholder="••••••••"
+                        autocomplete="current-password"
+                >
+                <span id="password-error" class="error-msg">
+                    This field is required
+                </span>
+            </div>
+
+            <!-- Forgot password sits right aligned -->
+            <a href="#" class="forgot-link">Forgot password?</a>
+
+            <!-- Submits and validates via main.js
+                 navigates to index.html on success -->
+            <button type="submit" class="btn-primary">
+                Sign In
+            </button>
+
+        </form>
+
+        <!-- Divider between sign in and create account -->
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <!-- Create account stays on same page for now -->
+        <a href="signin.html" class="btn-secondary">
+            Create an Account
+        </a>
+
+    </div>
 
 </main>
 
