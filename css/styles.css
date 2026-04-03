@@ -339,3 +339,42 @@ textarea.input-field { height: 100px; padding: 12px 14px; resize: vertical; }
 @media (min-width: 768px) { .section-title { padding: 32px 48px 8px; font-size: 24px; } }
 .page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
 
+
+
+
+
+/* Hero — index.html only */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  gap: 16px;
+}
+
+.hero-sub {
+  color: var(--text-muted);
+  max-width: 400px;
+}
+
+.hero-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 342px;
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .hero-btns {
+    flex-direction: row;
+    max-width: none;
+  }
+  .hero-btns .btn {
+    min-width: 200px;
+  }
+}
