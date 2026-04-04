@@ -1,167 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Market49 — Browse Listings</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Market49 — Browse Listings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css"/>
 </head>
-<body class="page-wrapper">
+<body>
 
-<!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="index.html" class="nav-logo">Market<span>49</span></a>
+<!-- ======= NAV BAR ======= -->
+<nav class="navbar">
+    <a href="index.html" class="logo">Market<span>49</span></a>
     <div class="nav-search">
-      <input type="text" placeholder="Search Listings..." id="searchInput" aria-label="Search listings" />
+        <label for="search-input" style="display:none">Search</label>
+        <input type="text" placeholder="Search listings..."
+               id="search-input">
+        <div class="search-dropdown" id="search-dropdown"></div>
     </div>
-    <div class="nav-right">
-      <a href="listings.html" class="nav-cart">🛒</a>
-      <a href="#" class="nav-signin">Sign In</a>
-      <div class="toggle-pill" id="darkToggle">
-        <div class="knob"></div>
-      </div>
+    <div class="nav-actions">
+        <a href="cart.html" aria-label="Cart">
+            <svg class="cart-icon" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0
+                 002-2V6l-3-4z" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6"
+                      stroke-linecap="round"/>
+                <path d="M16 10a4 4 0 01-8 0"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a href="signin.html">Sign In</a>
+        <div class="toggle-pill" id="dark-toggle">
+            <div class="toggle-dot"></div>
+        </div>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Open menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+</nav>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">🏠 Home</a>
-    <a href="listings.html">🔍 Browse Listings</a>
-    <a href="listing.html">📦 Post a Listing</a>
-    <a href="#">👤 Sign In</a>
-    <a href="listings.html">🛒 Cart</a>
-  </div>
+<!-- ======= MOBILE MENU ======= -->
+<div class="mobile-menu" id="mobile-menu">
+    <button class="close-menu" id="close-menu">&#10005;</button>
+    <a href="index.html">Home</a>
+    <a href="listings.html">Browse Listings</a>
+    <a href="cart.html">Cart</a>
+    <a href="post-listing.html">Post a Listing</a>
+    <a href="manage-listings.html">My Listings</a>
+    <a href="signin.html">Sign In</a>
+</div>
+<div class="menu-overlay" id="menu-overlay"></div>
 
-  <!-- MAIN CONTENT -->
-  <main style="flex:1;">
-    <h2 class="section-title" id="resultsHeading">Browse Listings</h2>
+<!-- ======= PAGE CONTENT ======= -->
+<main>
+    <h2 class="section-title">Browse Listings</h2>
 
     <div class="listings-grid">
 
-      <a href="listing-detail.html" class="card">
-        <div class="card-img">
-          <img src="https://placehold.co/400x300/e0e0e0/666?text=Textbook" alt="Calculus Textbook" />
-        </div>
-        <div class="card-body">
-          <p class="card-name">Calculus Textbook, 3rd Ed.</p>
-          <p class="card-price">$35.00</p>
-        </div>
-        <div class="card-footer">
-          <span></span>
-          <div class="card-actions">
-            <button class="like-btn">🤍</button>
-            <button class="delete-btn">🗑</button>
-          </div>
-        </div>
-      </a>
+        <a href="listing-detail.html" class="card">
+            <div class="card-img">
+                <img src="https://placehold.co/400x300/e0e0e0/666?text=Textbook"
+                     alt="Calculus Textbook"/>
+            </div>
+            <div class="card-body">
+                <div class="card-body-row">
+                    <div class="card-body-info">
+                        <p class="card-name">Calculus Textbook, 3rd Ed.</p>
+                        <p class="card-price">$35.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="like-btn">
+                            <i class="fa-solid fa-star star-icon"></i>
+                        </button>
+                        <button class="delete-btn">
+                            <i class="fa-solid fa-trash delete-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-      <a href="listing-detail.html" class="card">
-        <div class="card-img">
-          <img src="https://placehold.co/400x300/e0e0e0/666?text=Keyboard" alt="Mechanical Keyboard" />
-        </div>
-        <div class="card-body">
-          <p class="card-name">Mechanical Keyboard</p>
-          <p class="card-price">$60.00</p>
-        </div>
-        <div class="card-footer">
-          <span></span>
-          <div class="card-actions">
-            <button class="like-btn">🤍</button>
-            <button class="delete-btn">🗑</button>
-          </div>
-        </div>
-      </a>
+        <a href="listing-detail.html" class="card">
+            <div class="card-img">
+                <img src="https://placehold.co/400x300/e0e0e0/666?text=Keyboard"
+                     alt="Mechanical Keyboard"/>
+            </div>
+            <div class="card-body">
+                <div class="card-body-row">
+                    <div class="card-body-info">
+                        <p class="card-name">Mechanical Keyboard</p>
+                        <p class="card-price">$60.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="like-btn">
+                            <i class="fa-solid fa-star star-icon"></i>
+                        </button>
+                        <button class="delete-btn">
+                            <i class="fa-solid fa-trash delete-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-      <a href="listing-detail.html" class="card">
-        <div class="card-img">
-          <img src="https://placehold.co/400x300/e0e0e0/666?text=HDMI+Cable" alt="HDMI Cable" />
-        </div>
-        <div class="card-body">
-          <p class="card-name">HDMI Cable 6ft</p>
-          <p class="card-price">$12.00</p>
-        </div>
-        <div class="card-footer">
-          <span></span>
-          <div class="card-actions">
-            <button class="like-btn">🤍</button>
-            <button class="delete-btn">🗑</button>
-          </div>
-        </div>
-      </a>
+        <a href="listing-detail.html" class="card">
+            <div class="card-img">
+                <img src="https://placehold.co/400x300/e0e0e0/666?text=HDMI+Cable"
+                     alt="HDMI Cable"/>
+            </div>
+            <div class="card-body">
+                <div class="card-body-row">
+                    <div class="card-body-info">
+                        <p class="card-name">HDMI Cable 6ft</p>
+                        <p class="card-price">$12.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="like-btn">
+                            <i class="fa-solid fa-star star-icon"></i>
+                        </button>
+                        <button class="delete-btn">
+                            <i class="fa-solid fa-trash delete-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-      <a href="listing-detail.html" class="card">
-        <div class="card-img">
-          <img src="https://placehold.co/400x300/e0e0e0/666?text=Desk+Lamp" alt="Desk Lamp" />
-        </div>
-        <div class="card-body">
-          <p class="card-name">Adjustable Desk Lamp</p>
-          <p class="card-price">$25.00</p>
-        </div>
-        <div class="card-footer">
-          <span></span>
-          <div class="card-actions">
-            <button class="like-btn">🤍</button>
-            <button class="delete-btn">🗑</button>
-          </div>
-        </div>
-      </a>
+        <a href="listing-detail.html" class="card">
+            <div class="card-img">
+                <img src="https://placehold.co/400x300/e0e0e0/666?text=Desk+Lamp"
+                     alt="Desk Lamp"/>
+            </div>
+            <div class="card-body">
+                <div class="card-body-row">
+                    <div class="card-body-info">
+                        <p class="card-name">Adjustable Desk Lamp</p>
+                        <p class="card-price">$25.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="like-btn">
+                            <i class="fa-solid fa-star star-icon"></i>
+                        </button>
+                        <button class="delete-btn">
+                            <i class="fa-solid fa-trash delete-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-      <a href="listing-detail.html" class="card">
-        <div class="card-img">
-          <img src="https://placehold.co/400x300/e0e0e0/666?text=Backpack" alt="Backpack" />
-        </div>
-        <div class="card-body">
-          <p class="card-name">North Face Backpack</p>
-          <p class="card-price">$45.00</p>
-        </div>
-        <div class="card-footer">
-          <span></span>
-          <div class="card-actions">
-            <button class="like-btn">🤍</button>
-            <button class="delete-btn">🗑</button>
-          </div>
-        </div>
-      </a>
+        <a href="listing-detail.html" class="card">
+            <div class="card-img">
+                <img src="https://placehold.co/400x300/e0e0e0/666?text=Backpack"
+                     alt="Backpack"/>
+            </div>
+            <div class="card-body">
+                <div class="card-body-row">
+                    <div class="card-body-info">
+                        <p class="card-name">North Face Backpack</p>
+                        <p class="card-price">$45.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="like-btn">
+                            <i class="fa-solid fa-star star-icon"></i>
+                        </button>
+                        <button class="delete-btn">
+                            <i class="fa-solid fa-trash delete-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-      <a href="listing-detail.html" class="card">
-        <div class="card-img">
-          <img src="https://placehold.co/400x300/e0e0e0/666?text=Monitor" alt="Monitor" />
-        </div>
-        <div class="card-body">
-          <p class="card-name">24" Monitor</p>
-          <p class="card-price">$120.00</p>
-        </div>
-        <div class="card-footer">
-          <span></span>
-          <div class="card-actions">
-            <button class="like-btn">🤍</button>
-            <button class="delete-btn">🗑</button>
-          </div>
-        </div>
-      </a>
+        <a href="listing-detail.html" class="card">
+            <div class="card-img">
+                <img src="https://placehold.co/400x300/e0e0e0/666?text=Monitor"
+                     alt="Monitor"/>
+            </div>
+            <div class="card-body">
+                <div class="card-body-row">
+                    <div class="card-body-info">
+                        <p class="card-name">24" Monitor</p>
+                        <p class="card-price">$120.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="like-btn">
+                            <i class="fa-solid fa-star star-icon"></i>
+                        </button>
+                        <button class="delete-btn">
+                            <i class="fa-solid fa-trash delete-icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </a>
 
     </div>
-  </main>
+</main>
 
-    <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="#">Help Center</a>
-      <a href="contact.html">Contact</a>
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-    </div>
+<!-- ======= FOOTER ======= -->
+<footer>
+    <p>Help Center | Contact | Sign In | FAQs |
+        Terms of Service | Privacy Policy</p>
     <p>© 2026 Market49</p>
-  </footer>
+</footer>
 
-  <script src="js/script.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

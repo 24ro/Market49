@@ -449,7 +449,6 @@ footer {
   gap: 16px;
 }
 
-/* Card is a clickable link */
 .card {
   background: var(--surface);
   border-radius: 12px;
@@ -459,7 +458,6 @@ footer {
   display: block;
 }
 
-/* Gray image placeholder */
 .card-img {
   width: 100%;
   height: 130px;
@@ -482,11 +480,28 @@ footer {
   padding: 10px 12px 14px;
 }
 
+/* Card body row — name/price on left, icons on right */
+.card-body-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-body-info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Prevents long names from pushing icons off card */
 .card-name {
   font-size: 14px;
   font-weight: 600;
   color: var(--green);
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-price {
@@ -495,52 +510,24 @@ footer {
   margin-bottom: 6px;
 }
 
-.star {
-  color: var(--gold);
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.card-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
   font-size: 16px;
 }
 
-<<<<<<< HEAD
+.star-icon   { color: var(--gold); }
+.delete-icon { color: var(--error); }
 
 
-
-
-/* Hero — index.html only */
-.hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 24px;
-  gap: 16px;
-}
-
-.hero-sub {
-  color: var(--text-muted);
-  max-width: 400px;
-}
-
-.hero-btns {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  max-width: 342px;
-  margin-top: 16px;
-}
-
-@media (min-width: 768px) {
-  .hero-btns {
-    flex-direction: row;
-    max-width: none;
-  }
-  .hero-btns .btn {
-    min-width: 200px;
-  }
-}
-=======
 /* ============================================
    12. LISTING DETAIL PAGE
    Image stacks above info on mobile,
