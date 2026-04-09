@@ -221,7 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Navigate only if all fields passed
       if (titleOk && priceOk && descOk && photoOk) {
-        window.location.href = 'manage-listings.html';
+        // Show overlay and button spinner
+        const overlay = document.getElementById('loading-overlay');
+        const submitBtn = postForm.querySelector('[type="submit"]');
+        if (overlay) overlay.classList.add('visible');
+        if (submitBtn) submitBtn.classList.add('btn-loading');
+
+        setTimeout(() => {
+          window.location.href = 'manage-listings.html';
+        }, 1500);
       }
     });
   }
@@ -243,7 +251,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const cardOk = checkField('card-number', 'card-error');
 
       if (nameOk && contactOk && cardOk) {
-        window.location.href = 'order-confirmed.html';
+        // Show overlay and button spinner
+        const overlay = document.getElementById('loading-overlay');
+        const submitBtn = checkoutForm.querySelector('[type="submit"]');
+        if (overlay) overlay.classList.add('visible');
+        if (submitBtn) submitBtn.classList.add('btn-loading');
+
+        setTimeout(() => {
+          window.location.href = 'order-confirmed.html';
+        }, 1500);
       }
     });
   }
@@ -295,9 +311,24 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
-});
+  // ==========================================
+  // 9. LISTINGS SKELETON → REAL CARDS
+  // Shows skeleton placeholders for 1 second,
+  // then fades in the real listings grid.
+  // ==========================================
 
-// ============================================
+  const skeletonGrid = document.getElementById('skeleton-grid');
+  const realGrid = document.getElementById('real-grid');
+
+  if (skeletonGrid && realGrid) {
+    setTimeout(() => {
+      skeletonGrid.classList.add('hidden');
+      realGrid.classList.remove('hidden');
+      realGrid.classList.add('fade-in');
+    }, 1000);
+  }
+
+});  // end DOMContentLoaded
 // handleSuggestion — called from inline onclick
 // in the search dropdown. Defined outside
 // DOMContentLoaded so it's globally accessible.
