@@ -16,10 +16,18 @@
     <p class="loading-overlay-label">Posting your listing...</p>
 </div>
 
-<!-- ======= NAV BAR ======= -->
 <nav class="navbar">
     <a href="index.html" class="logo">Market<span>49</span></a>
+
+    <!-- Desktop nav links — hidden on mobile -->
+    <div class="nav-links">
+        <a href="listings.html">Browse</a>
+        <a href="post-listing.html">Post a Listing</a>
+        <a href="manage-listings.html">My Listings</a>
+    </div>
+
     <div class="nav-search">
+        <label for="search-input" style="display:none">Search</label>
         <input type="text" placeholder="Search listings..."
                id="search-input">
         <div class="search-dropdown" id="search-dropdown"></div>
@@ -29,7 +37,7 @@
             <svg class="cart-icon" viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0
-             002-2V6l-3-4z" stroke-linecap="round"
+                 002-2V6l-3-4z" stroke-linecap="round"
                       stroke-linejoin="round"/>
                 <line x1="3" y1="6" x2="21" y2="6"
                       stroke-linecap="round"/>

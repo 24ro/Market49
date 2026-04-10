@@ -85,44 +85,81 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ==========================================
-  // 3. SEARCH DROPDOWN
-  // Shows a static suggestion list when the
-  // search bar is focused. Clicking a suggestion
-  // navigates to listings with the term in URL.
-  // ==========================================
+ // ==========================================
+ // 3. SEARCH — real-time filtering
+ // Filters suggestions as user types.
+ // Shows no-results message if nothing matches.
+ // Clears dropdown when input is empty.
+ // ==========================================
 
-  const searchInput = document.getElementById('search-input');
-  const dropdown = document.getElementById('search-dropdown');
+ const searchInput = document.getElementById('search-input');
+ const dropdown = document.getElementById('search-dropdown');
 
-  // Static suggestions — no real search needed
-  const suggestions = [
-    'Calculus Textbook',
-    'Mechanical Keyboard',
-    'Desk Lamp',
-    'HDMI Cable',
-    'Backpack',
-    'Graphing Calculator'
-  ];
+ // Full list of searchable items
+ // In a real app this would come from a database
+ const suggestions = [
+   'Calculus Textbook',
+   'Mechanical Keyboard',
+   'Desk Lamp',
+   'HDMI Cable',
+   'Backpack',
+   'Graphing Calculator',
+   'Monitor',
+   'North Face Backpack',
+   'Desk Chair',
+   'Laptop Stand'
+ ];
 
-  if (searchInput && dropdown) {
+ if (searchInput && dropdown) {
 
-    // Show dropdown when search bar is clicked
-    searchInput.addEventListener('focus', () => {
-      dropdown.innerHTML = suggestions
-        .map(s => `<div class="suggestion"
-          onclick="handleSuggestion('${s}')">${s}</div>`)
-        .join('');
-      dropdown.classList.add('visible');
-    });
+   // Fires on every keystroke — not just on focus
+   searchInput.addEventListener('input', () => {
+     const query = searchInput.value.trim().toLowerCase();
 
-    // Hide dropdown when clicking outside the search bar
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.nav-search')) {
-        dropdown.classList.remove('visible');
-      }
-    });
-  }
+     // If input is empty hide the dropdown completely
+     if (query === '') {
+       dropdown.classList.remove('visible');
+       dropdown.innerHTML = '';
+       return;
+     }
+
+     // Filter suggestions that contain the typed text
+     const matches = suggestions.filter(s =>
+       s.toLowerCase().includes(query)
+     );
+
+     if (matches.length === 0) {
+       // Show no results message
+       dropdown.innerHTML = `
+         <div class="suggestion no-results">
+           No results for "${searchInput.value}"
+         </div>`;
+     } else {
+       // Show matching suggestions
+       dropdown.innerHTML = matches
+         .map(s => `<div class="suggestion"
+           onclick="handleSuggestion('${s}')">${s}</div>`)
+         .join('');
+     }
+
+     dropdown.classList.add('visible');
+   });
+
+   // Hide dropdown when clicking outside the search bar
+   document.addEventListener('click', (e) => {
+     if (!e.target.closest('.nav-search')) {
+       dropdown.classList.remove('visible');
+     }
+   });
+
+   // Close dropdown on Escape key
+   searchInput.addEventListener('keydown', (e) => {
+     if (e.key === 'Escape') {
+       dropdown.classList.remove('visible');
+       searchInput.blur();
+     }
+   });
+ }
 
   // ==========================================
   // 4. CONDITION BUTTONS — post listing page
@@ -322,13 +359,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (skeletonGrid && realGrid) {
     setTimeout(() => {
-      skeletonGrid.classList.add('hidden');
-      realGrid.classList.remove('hidden');
+      skeletonGrid.style.display = 'none';
+      realGrid.style.display = 'grid';
       realGrid.classList.add('fade-in');
+
+      // After real cards are visible, apply any
+      // URL search filter that was waiting
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlQuery = urlParams.get('search');
+      if (urlQuery) {
+        filterListings(urlQuery);
+        if (searchInput) searchInput.value = urlQuery;
+      }
     }, 1000);
   }
 
+  // ==========================================
+  // LISTINGS PAGE FILTER
+  // Reads the search query from the URL and
+  // hides cards that don't match on page load.
+  // Also filters live as user types on listings page.
+  // ==========================================
+
+  function filterListings(query) {
+    const cards = document.querySelectorAll('.card[data-name]');
+    if (cards.length === 0) return;
+
+    const q = query.toLowerCase().trim();
+
+    cards.forEach(card => {
+      const name = card.getAttribute('data-name').toLowerCase();
+      // Show card if name contains query, hide if not
+      card.style.display = (q === '' || name.includes(q))
+        ? 'block' : 'none';
+    });
+  }
+
+  // Also filter live as user types on listings page
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      filterListings(searchInput.value);
+    });
+  }
+
 });  // end DOMContentLoaded
+
+
 // handleSuggestion — called from inline onclick
 // in the search dropdown. Defined outside
 // DOMContentLoaded so it's globally accessible.

@@ -15,6 +15,11 @@
 <!-- ======= NAV BAR ======= -->
 <nav class="navbar">
     <a href="index.html" class="logo">Market<span>49</span></a>
+    <div class="nav-links">
+        <a href="listings.html">Browse</a>
+        <a href="post-listing.html">Post a Listing</a>
+        <a href="manage-listings.html">My Listings</a>
+    </div>
     <div class="nav-search">
         <label for="search-input" style="display:none">Search</label>
         <input type="text" placeholder="Search listings..."
@@ -48,7 +53,7 @@
     <button class="close-menu" id="close-menu">&#10005;</button>
     <a href="index.html">Home</a>
     <a href="listings.html">Browse Listings</a>
-    <a href="cart.html">Cart</a>
+    <a href="cart.html">&#128722; Cart</a>
     <a href="post-listing.html">Post a Listing</a>
     <a href="manage-listings.html">My Listings</a>
     <a href="signin.html">Sign In</a>
@@ -58,194 +63,202 @@
 <!-- ======= PAGE CONTENT ======= -->
 <main>
     <h2 class="section-title">Browse Listings</h2>
+    <div class="listings-container">
 
-    <!-- Skeleton grid — shown first while content "loads" -->
-    <div class="listings-grid" id="skeleton-grid">
-        <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </div>
-        </div>
-        <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </div>
-        </div>
-        <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </div>
-        </div>
-        <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </div>
-        </div>
-        <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </div>
-        </div>
-        <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-body">
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Real cards grid — hidden until skeleton fades out -->
-    <div class="listings-grid hidden" id="real-grid">
-
-        <a href="listing-detail.html" class="card">
-            <div class="card-img">
-                <img src="https://placehold.co/400x300/e0e0e0/666?text=Textbook"
-                     alt="Calculus Textbook"/>
-            </div>
-            <div class="card-body">
-                <div class="card-body-row">
-                    <div class="card-body-info">
-                        <p class="card-name">Calculus Textbook, 3rd Ed.</p>
-                        <p class="card-price">$35.00</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="like-btn">
-                            <i class="fa-solid fa-star star-icon"></i>
-                        </button>
-                        <button class="delete-btn">
-                            <i class="fa-solid fa-trash delete-icon"></i>
-                        </button>
-                    </div>
+        <!-- Skeleton cards shown while real cards load -->
+        <div class="listings-grid" id="skeleton-grid">
+            <div class="card-skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        </a>
-
-        <a href="listing-detail.html" class="card">
-            <div class="card-img">
-                <img src="https://placehold.co/400x300/e0e0e0/666?text=Keyboard"
-                     alt="Mechanical Keyboard"/>
-            </div>
-            <div class="card-body">
-                <div class="card-body-row">
-                    <div class="card-body-info">
-                        <p class="card-name">Mechanical Keyboard</p>
-                        <p class="card-price">$60.00</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="like-btn">
-                            <i class="fa-solid fa-star star-icon"></i>
-                        </button>
-                        <button class="delete-btn">
-                            <i class="fa-solid fa-trash delete-icon"></i>
-                        </button>
-                    </div>
+            <div class="card-skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        </a>
-
-        <a href="listing-detail.html" class="card">
-            <div class="card-img">
-                <img src="https://placehold.co/400x300/e0e0e0/666?text=HDMI+Cable"
-                     alt="HDMI Cable"/>
-            </div>
-            <div class="card-body">
-                <div class="card-body-row">
-                    <div class="card-body-info">
-                        <p class="card-name">HDMI Cable 6ft</p>
-                        <p class="card-price">$12.00</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="like-btn">
-                            <i class="fa-solid fa-star star-icon"></i>
-                        </button>
-                        <button class="delete-btn">
-                            <i class="fa-solid fa-trash delete-icon"></i>
-                        </button>
-                    </div>
+            <div class="card-skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        </a>
-
-        <a href="listing-detail.html" class="card">
-            <div class="card-img">
-                <img src="https://placehold.co/400x300/e0e0e0/666?text=Desk+Lamp"
-                     alt="Desk Lamp"/>
-            </div>
-            <div class="card-body">
-                <div class="card-body-row">
-                    <div class="card-body-info">
-                        <p class="card-name">Adjustable Desk Lamp</p>
-                        <p class="card-price">$25.00</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="like-btn">
-                            <i class="fa-solid fa-star star-icon"></i>
-                        </button>
-                        <button class="delete-btn">
-                            <i class="fa-solid fa-trash delete-icon"></i>
-                        </button>
-                    </div>
+            <div class="card-skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        </a>
-
-        <a href="listing-detail.html" class="card">
-            <div class="card-img">
-                <img src="https://placehold.co/400x300/e0e0e0/666?text=Backpack"
-                     alt="Backpack"/>
-            </div>
-            <div class="card-body">
-                <div class="card-body-row">
-                    <div class="card-body-info">
-                        <p class="card-name">North Face Backpack</p>
-                        <p class="card-price">$45.00</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="like-btn">
-                            <i class="fa-solid fa-star star-icon"></i>
-                        </button>
-                        <button class="delete-btn">
-                            <i class="fa-solid fa-trash delete-icon"></i>
-                        </button>
-                    </div>
+            <div class="card-skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        </a>
-
-        <a href="listing-detail.html" class="card">
-            <div class="card-img">
-                <img src="https://placehold.co/400x300/e0e0e0/666?text=Monitor"
-                     alt="Monitor"/>
-            </div>
-            <div class="card-body">
-                <div class="card-body-row">
-                    <div class="card-body-info">
-                        <p class="card-name">24" Monitor</p>
-                        <p class="card-price">$120.00</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="like-btn">
-                            <i class="fa-solid fa-star star-icon"></i>
-                        </button>
-                        <button class="delete-btn">
-                            <i class="fa-solid fa-trash delete-icon"></i>
-                        </button>
-                    </div>
+            <div class="card-skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        </a>
+        </div>
 
+        <!-- Real cards — hidden until skeleton finishes -->
+        <div class="listings-grid" id="real-grid" style="display:none">
+
+            <a href="listing-detail.html" class="card"
+               data-name="Calculus Textbook">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=300&fit=crop"
+                         alt="Calculus Textbook"/>
+                </div>
+                <div class="card-body">
+                    <div class="card-body-row">
+                        <div class="card-body-info">
+                            <p class="card-name">Calculus Textbook, 3rd Ed.</p>
+                            <p class="card-price">$35.00</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="like-btn">
+                                <i class="fa-solid fa-star star-icon"></i>
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fa-solid fa-trash delete-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="listing-detail.html" class="card"
+               data-name="Mechanical Keyboard">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=300&fit=crop"
+                         alt="Mechanical Keyboard"/>
+                </div>
+                <div class="card-body">
+                    <div class="card-body-row">
+                        <div class="card-body-info">
+                            <p class="card-name">Mechanical Keyboard</p>
+                            <p class="card-price">$60.00</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="like-btn">
+                                <i class="fa-solid fa-star star-icon"></i>
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fa-solid fa-trash delete-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="listing-detail.html" class="card"
+               data-name="HDMI Cable">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1601944179066-29786cb9d32a?w=400&h=300&fit=crop"
+                         alt="HDMI Cable"/>
+                </div>
+                <div class="card-body">
+                    <div class="card-body-row">
+                        <div class="card-body-info">
+                            <p class="card-name">HDMI Cable 6ft</p>
+                            <p class="card-price">$12.00</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="like-btn">
+                                <i class="fa-solid fa-star star-icon"></i>
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fa-solid fa-trash delete-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="listing-detail.html" class="card"
+               data-name="Desk Lamp">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=300&fit=crop"
+                         alt="Desk Lamp"/>
+                </div>
+                <div class="card-body">
+                    <div class="card-body-row">
+                        <div class="card-body-info">
+                            <p class="card-name">Adjustable Desk Lamp</p>
+                            <p class="card-price">$25.00</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="like-btn">
+                                <i class="fa-solid fa-star star-icon"></i>
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fa-solid fa-trash delete-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="listing-detail.html" class="card"
+               data-name="North Face Backpack">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop"
+                         alt="North Face Backpack"/>
+                </div>
+                <div class="card-body">
+                    <div class="card-body-row">
+                        <div class="card-body-info">
+                            <p class="card-name">North Face Backpack</p>
+                            <p class="card-price">$45.00</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="like-btn">
+                                <i class="fa-solid fa-star star-icon"></i>
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fa-solid fa-trash delete-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="listing-detail.html" class="card"
+               data-name="Monitor">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop"
+                         alt="Monitor"/>
+                </div>
+                <div class="card-body">
+                    <div class="card-body-row">
+                        <div class="card-body-info">
+                            <p class="card-name">24" Monitor</p>
+                            <p class="card-price">$120.00</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="like-btn">
+                                <i class="fa-solid fa-star star-icon"></i>
+                            </button>
+                            <button class="delete-btn">
+                                <i class="fa-solid fa-trash delete-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
     </div>
 </main>
 

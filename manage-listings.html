@@ -11,10 +11,18 @@
 </head>
 <body>
 
-<!-- ======= NAV BAR ======= -->
 <nav class="navbar">
     <a href="index.html" class="logo">Market<span>49</span></a>
+
+    <!-- Desktop nav links — hidden on mobile -->
+    <div class="nav-links">
+        <a href="listings.html">Browse</a>
+        <a href="post-listing.html">Post a Listing</a>
+        <a href="manage-listings.html">My Listings</a>
+    </div>
+
     <div class="nav-search">
+        <label for="search-input" style="display:none">Search</label>
         <input type="text" placeholder="Search listings..."
                id="search-input">
         <div class="search-dropdown" id="search-dropdown"></div>

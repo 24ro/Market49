@@ -294,6 +294,7 @@ main {
   align-items: center;
 }
 
+
 /* ============================================
    6. MOBILE MENU
    Slides in from the left when hamburger
@@ -1434,6 +1435,10 @@ body.dark .order-total {
     gap: 24px;
   }
 
+  .listings-container {
+      padding: 0 24px;
+  }
+
   .card-img {
     height: 200px;
   }
@@ -1526,6 +1531,10 @@ body.dark .order-total {
   .manage-header h1 {
     font-size: 32px;
   }
+
+  .listings-container {
+          padding: 0 80px;
+      }
 }
 
 /* ============================================
@@ -1654,4 +1663,57 @@ body.dark .order-total {
     transform: translateY(0);
   }
 }
-  
+
+/* No results message inside search dropdown */
+.suggestion.no-results {
+  color: var(--text-secondary);
+  font-style: italic;
+  cursor: default;
+  padding: 14px 20px;
+}
+
+.suggestion.no-results:hover {
+  background: none;
+}
+
+/* Desktop nav links — Browse, Post, My Listings
+   Hidden on mobile since hamburger covers these */
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+
+  .listings-container {
+          padding: 0 48px;
+      }
+
+  /* existing rules below unchanged */
+  .nav-actions {
+    display: flex;
+  }
+
+  .hamburger {
+    display: none;
+  }
+}
