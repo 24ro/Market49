@@ -7,25 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <style>.success-msg { color: #22c55e; font-size: 0.78rem; font-weight: 500; margin-top: 4px; display: none; }</style>
 </head>
 <body>
-
+ 
 <!-- ======= LOADING OVERLAY ======= -->
 <div class="loading-overlay" id="loading-overlay">
     <div class="spinner"></div>
     <p class="loading-overlay-label">Processing your order...</p>
 </div>
-
+ 
 <nav class="navbar">
     <a href="index.html" class="logo">Market<span>49</span></a>
-
+ 
     <!-- Desktop nav links — hidden on mobile -->
     <div class="nav-links">
         <a href="listings.html">Browse</a>
         <a href="post-listing.html">Post a Listing</a>
         <a href="manage-listings.html">My Listings</a>
     </div>
-
+ 
     <div class="nav-search">
         <label for="search-input" style="display:none">Search</label>
         <input type="text" placeholder="Search listings..."
@@ -53,7 +54,7 @@
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
 </nav>
-
+ 
 <!-- ======= MOBILE MENU ======= -->
 <div class="mobile-menu" id="mobile-menu">
     <button class="close-menu" id="close-menu">&#10005;</button>
@@ -65,12 +66,12 @@
     <a href="signin.html">Sign In</a>
 </div>
 <div class="menu-overlay" id="menu-overlay"></div>
-
+ 
 <!-- ======= PAGE CONTENT ======= -->
 <main class="checkout-page">
-
+ 
     <h1>Checkout</h1>
-
+ 
     <!-- Breadcrumb — shows current step -->
     <div class="breadcrumb">
         <span class="active">Shipping</span>
@@ -79,15 +80,15 @@
         <span class="arrow">&#8594;</span>
         <span>Review</span>
     </div>
-
+ 
     <div class="checkout-layout">
-
+ 
         <!-- Left column: form -->
         <div class="checkout-form">
             <form id="checkout-form">
-
+ 
                 <p class="section-title">Shipping / Pickup</p>
-
+ 
                 <!-- Name and contact side by side on desktop -->
                 <div class="form-row">
                     <div class="field-group">
@@ -98,9 +99,8 @@
                                 type="text"
                                 placeholder="Full name"
                         >
-                        <span id="name-error" class="error-msg">
-                            This field is required
-                        </span>
+                        <span id="name-error" class="error-msg">This field is required</span>
+                        <span id="name-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                     <div class="field-group">
                         <label for="contact">Phone / Email</label>
@@ -110,12 +110,11 @@
                                 type="text"
                                 placeholder="Phone or email"
                         >
-                        <span id="contact-error" class="error-msg">
-                            This field is required
-                        </span>
+                        <span id="contact-error" class="error-msg">This field is required</span>
+                        <span id="contact-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                 </div>
-
+ 
                 <div class="field-group">
                     <label for="address">Street Address</label>
                     <input
@@ -124,8 +123,9 @@
                             type="text"
                             placeholder="Street address"
                     >
+                        <span id="address-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                 </div>
-
+ 
                 <!-- City, State, ZIP in a row -->
                 <div class="form-row">
                     <div class="field-group">
@@ -136,6 +136,7 @@
                                 type="text"
                                 placeholder="City"
                         >
+                        <span id="city-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                     <div class="field-group">
                         <label for="state">State</label>
@@ -145,6 +146,7 @@
                                 type="text"
                                 placeholder="State"
                         >
+                        <span id="state-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                     <div class="field-group">
                         <label for="zip">ZIP</label>
@@ -154,9 +156,10 @@
                                 type="text"
                                 placeholder="ZIP"
                         >
+                        <span id="zip-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                 </div>
-
+ 
                 <!-- Delivery vs local pickup selector -->
                 <div class="field-group">
                     <label>Delivery Method</label>
@@ -174,9 +177,9 @@
                         </button>
                     </div>
                 </div>
-
+ 
                 <p class="section-title">Payment</p>
-
+ 
                 <div class="field-group">
                     <label for="card-number">Card Number</label>
                     <input
@@ -185,11 +188,10 @@
                             type="text"
                             placeholder="Card number"
                     >
-                    <span id="card-error" class="error-msg">
-                        This field is required
-                    </span>
+                    <span id="card-error" class="error-msg">This field is required</span>
+                    <span id="card-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                 </div>
-
+ 
                 <!-- Expiry, CVC, name in a row -->
                 <div class="form-row">
                     <div class="field-group">
@@ -200,6 +202,7 @@
                                 type="text"
                                 placeholder="MM/YY"
                         >
+                        <span id="expiry-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                     <div class="field-group">
                         <label for="cvc">CVC</label>
@@ -209,6 +212,7 @@
                                 type="text"
                                 placeholder="CVC"
                         >
+                        <span id="cvc-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                     <div class="field-group">
                         <label for="card-name">Name on Card</label>
@@ -218,9 +222,10 @@
                                 type="text"
                                 placeholder="Name on card"
                         >
+                        <span id="card-name-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
                     </div>
                 </div>
-
+ 
                 <div class="field-group">
                     <label for="notes">Notes to Seller (optional)</label>
                     <textarea
@@ -230,7 +235,7 @@
                             placeholder="e.g. I can meet after 5pm..."
                     ></textarea>
                 </div>
-
+ 
                 <!-- Back goes to listings, Place Order validates then confirms -->
                 <div class="form-actions">
                     <a href="cart.html" class="btn-secondary">
@@ -240,15 +245,15 @@
                         Place Order
                     </button>
                 </div>
-
+ 
             </form>
         </div>
-
+ 
         <!-- Right column: order summary -->
         <div class="order-summary">
-
+ 
             <h2>Order Summary</h2>
-
+ 
             <!-- Item preview -->
             <div class="order-item">
                 <div class="order-item-img"></div>
@@ -258,7 +263,7 @@
                 </div>
                 <p class="order-item-price">$35.00</p>
             </div>
-
+ 
             <div class="order-row">
                 <span>Item subtotal</span>
                 <span>$35.00</span>
@@ -275,30 +280,64 @@
                 <span>Total</span>
                 <span>$42.00</span>
             </div>
-
+ 
             <button class="btn-secondary" style="width:100%">
                 Apply Promo Code
             </button>
-
+ 
             <p style="font-size:11px;color:var(--text-muted);
                text-align:center;margin-top:12px;">
                 By placing your order, you agree to the Terms.
             </p>
-
+ 
         </div>
-
+ 
     </div>
-
+ 
 </main>
-
+ 
 <!-- ======= FOOTER ======= -->
 <footer>
     <p>Help Center | Contact | Sign In | FAQs |
         Terms of Service | Privacy Policy</p>
     <p>© 2026 Market49</p>
 </footer>
-
+ 
 <script src="js/main.js"></script>
-
+ 
+<script>
+(function () {
+  var fields = [
+    { id: 'full-name',   success: 'name-success',      error: 'name-error'    },
+    { id: 'contact',     success: 'contact-success',   error: 'contact-error' },
+    { id: 'address',     success: 'address-success',   error: null            },
+    { id: 'city',        success: 'city-success',      error: null            },
+    { id: 'state',       success: 'state-success',     error: null            },
+    { id: 'zip',         success: 'zip-success',       error: null            },
+    { id: 'card-number', success: 'card-success',      error: 'card-error'    },
+    { id: 'expiry',      success: 'expiry-success',    error: null            },
+    { id: 'cvc',         success: 'cvc-success',       error: null            },
+    { id: 'card-name',   success: 'card-name-success', error: null            },
+  ];
+  fields.forEach(function (f) {
+    var el  = document.getElementById(f.id);
+    var ok  = document.getElementById(f.success);
+    var err = f.error ? document.getElementById(f.error) : null;
+    if (!el || !ok) return;
+    el.addEventListener('blur', function () {
+      if (el.value.trim() !== '') {
+        ok.style.display = 'inline';
+        if (err) err.style.display = 'none';
+      } else {
+        ok.style.display = 'none';
+      }
+    });
+    el.addEventListener('input', function () {
+      if (el.value.trim() === '') ok.style.display = 'none';
+    });
+  });
+})();
+</script>
+ 
 </body>
 </html>
