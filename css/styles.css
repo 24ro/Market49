@@ -1717,3 +1717,35 @@ body.dark .order-total {
     display: none;
   }
 }
+
+/* ============================================
+   REAL-TIME FORM VALIDATION STATES
+   Success border and message for valid fields.
+   Complements existing .error state.
+   ============================================ */
+
+/* Green border when field is valid */
+.input-field.success {
+  border-color: var(--success);
+}
+
+/* Success message — hidden until JS adds .visible */
+.success-msg {
+  color: var(--success);
+  font-size: 13px;
+  margin-top: 4px;
+  display: none;
+}
+
+.success-msg.visible {
+  display: block;
+}
+
+/* Live character counter below description
+   and password fields */
+.field-counter {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  transition: color 0.2s ease;
+}
