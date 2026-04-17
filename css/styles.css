@@ -168,16 +168,36 @@ main {
   border-color: var(--error);
 }
 
-/* Error message below a field — hidden by default */
-.error-msg {
-  color: var(--error);
+.input-field.success {
+  border-color: var(--success);
+}
+
+.helper-msg {
+  display: block;
   font-size: 13px;
-  margin-top: 4px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+/* Error and success messages sit directly under each field */
+.error-msg,
+.success-msg {
+  font-size: 13px;
+  margin-top: 6px;
   display: none;
 }
 
+.error-msg {
+  color: var(--error);
+}
+
+.success-msg {
+  color: var(--success);
+}
+
 /* JS adds this class to reveal the message */
-.error-msg.visible {
+.error-msg.visible,
+.success-msg.visible {
   display: block;
 }
 
