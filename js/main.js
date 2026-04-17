@@ -532,133 +532,124 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 8. SIGN IN FORM — real-time validation
-  // Validates email format and password length.
-  // Confirm password must match password.
+  // Requires 3 meaningful fields: email, 49er ID,
+  // and password. Errors appear inline beside
+  // each field while the user is typing.
   // ==========================================
 
   const signinForm = document.getElementById('signin-form');
 
   if (signinForm) {
-
-    // Email — required, must be valid format
     const emailInput = document.getElementById('email');
+    const studentIdInput = document.getElementById('student-id');
+    const passwordInput = document.getElementById('password');
+
+    const emailPattern = /^[^\s@]+@charlotte\.edu$/i;
+    const studentIdPattern = /^800\d{6}$/;
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
     if (emailInput) {
-      emailInput.addEventListener('blur', () => validateEmail());
-      emailInput.addEventListener('input', () => {
-        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
-          setSuccess(emailInput, 'email-error', 'email-success');
-        }
+      emailInput.addEventListener('input', validateEmail);
+      emailInput.addEventListener('blur', validateEmail);
+    }
+
+    if (studentIdInput) {
+      studentIdInput.addEventListener('input', () => {
+        studentIdInput.value = studentIdInput.value.replace(/\D/g, '').slice(0, 9);
+        validateStudentId();
       });
+      studentIdInput.addEventListener('blur', validateStudentId);
+    }
+
+    if (passwordInput) {
+      passwordInput.addEventListener('input', validatePassword);
+      passwordInput.addEventListener('blur', validatePassword);
     }
 
     function validateEmail() {
-      const emailInput = document.getElementById('email');
       const val = emailInput.value.trim();
+
       if (val === '') {
-        setError(emailInput, 'email-error', 'Email is required');
+        setError(emailInput, 'email-error', 'Please enter your Charlotte email address.', 'email-success');
         return false;
       }
+
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-        setError(emailInput, 'email-error',
-          'Please enter a valid email address');
+        setError(emailInput, 'email-error', 'Enter a valid email address, like name@charlotte.edu.', 'email-success');
         return false;
       }
+
+      if (!emailPattern.test(val)) {
+        setError(emailInput, 'email-error', 'Use your @charlotte.edu email so we can verify your campus account.', 'email-success');
+        return false;
+      }
+
       setSuccess(emailInput, 'email-error', 'email-success');
       return true;
     }
 
-    // Password — required, min 8 characters
-    const passwordInput = document.getElementById('password');
-    if (passwordInput) {
-      passwordInput.addEventListener('blur', () => validatePassword());
-      passwordInput.addEventListener('input', () => {
-        const len = passwordInput.value.length;
-        // Show live strength feedback
-        const counter = document.getElementById('password-counter');
-        if (counter) {
-          counter.textContent = len < 8
-            ? `${len}/8 characters minimum`
-            : 'Strong enough ✓';
-          counter.style.color = len >= 8
-            ? 'var(--success)' : 'var(--text-secondary)';
-        }
-        if (len >= 8) {
-          setSuccess(passwordInput, 'password-error',
-            'password-success');
-        }
-        // Re-check confirm password if it has a value
-        const confirmInput =
-          document.getElementById('confirm-password');
-        if (confirmInput && confirmInput.value.length > 0) {
-          validateConfirmPassword();
-        }
-      });
+    function validateStudentId() {
+      const val = studentIdInput.value.trim();
+
+      if (val === '') {
+        setError(studentIdInput, 'student-id-error', 'Enter your 49er ID to sign in to the campus marketplace.', 'student-id-success');
+        return false;
+      }
+
+      if (!/^\d+$/.test(val)) {
+        setError(studentIdInput, 'student-id-error', '49er ID should contain numbers only.', 'student-id-success');
+        return false;
+      }
+
+      if (!studentIdPattern.test(val)) {
+        setError(studentIdInput, 'student-id-error', '49er ID must be 9 digits and start with 800.', 'student-id-success');
+        return false;
+      }
+
+      setSuccess(studentIdInput, 'student-id-error', 'student-id-success');
+      return true;
     }
 
     function validatePassword() {
-      const passwordInput = document.getElementById('password');
       const val = passwordInput.value;
+
       if (val === '') {
-        setError(passwordInput, 'password-error',
-          'Password is required');
+        setError(passwordInput, 'password-error', 'Enter your password to continue.', 'password-success');
         return false;
       }
+
       if (val.length < 8) {
-        setError(passwordInput, 'password-error',
-          'Password must be at least 8 characters');
+        setError(passwordInput, 'password-error', 'Password must be at least 8 characters long.', 'password-success');
         return false;
       }
+
+      if (!/[A-Z]/.test(val)) {
+        setError(passwordInput, 'password-error', 'Add at least 1 uppercase letter so your password is stronger.', 'password-success');
+        return false;
+      }
+
+      if (!/\d/.test(val)) {
+        setError(passwordInput, 'password-error', 'Add at least 1 number to finish meeting the password rules.', 'password-success');
+        return false;
+      }
+
+      if (!passwordPattern.test(val)) {
+        setError(passwordInput, 'password-error', 'Password does not meet the sign-in requirements yet.', 'password-success');
+        return false;
+      }
+
       setSuccess(passwordInput, 'password-error', 'password-success');
       return true;
     }
 
-    // Confirm password — must match password field
-    const confirmInput = document.getElementById('confirm-password');
-    if (confirmInput) {
-      confirmInput.addEventListener('blur', () =>
-        validateConfirmPassword());
-      confirmInput.addEventListener('input', () => {
-        const passwordInput = document.getElementById('password');
-        if (confirmInput.value === passwordInput.value &&
-            confirmInput.value.length > 0) {
-          setSuccess(confirmInput, 'confirm-password-error',
-            'confirm-password-success');
-        } else if (confirmInput.value.length > 0) {
-          setError(confirmInput, 'confirm-password-error',
-            'Passwords do not match');
-        }
-      });
-    }
-
-    function validateConfirmPassword() {
-      const confirmInput = document.getElementById('confirm-password');
-      const passwordInput = document.getElementById('password');
-      if (!confirmInput) return true;
-      const val = confirmInput.value;
-      if (val === '') {
-        setError(confirmInput, 'confirm-password-error',
-          'Please confirm your password');
-        return false;
-      }
-      if (val !== passwordInput.value) {
-        setError(confirmInput, 'confirm-password-error',
-          'Passwords do not match');
-        return false;
-      }
-      setSuccess(confirmInput, 'confirm-password-error',
-        'confirm-password-success');
-      return true;
-    }
-
-    // Submit — runs all validators one final time
     signinForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
       const emailOk = validateEmail();
+      const studentIdOk = validateStudentId();
       const passwordOk = validatePassword();
-      const confirmOk = validateConfirmPassword();
 
-      if (emailOk && passwordOk && confirmOk) {
+      if (emailOk && studentIdOk && passwordOk) {
         window.location.href = 'index.html';
       }
     });
@@ -671,18 +662,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // clearState — removes both states
   // ==========================================
 
-  function setError(input, errorId, successId) {
+  function setError(input, errorId, message, successId) {
     input.classList.add('error');
     input.classList.remove('success');
+    input.setAttribute('aria-invalid', 'true');
     const error = document.getElementById(errorId);
     const success = document.getElementById(successId);
-    if (error) error.classList.add('visible');
+    if (error) {
+      error.textContent = message;
+      error.classList.add('visible');
+    }
     if (success) success.classList.remove('visible');
   }
 
   function setSuccess(input, errorId, successId) {
     input.classList.remove('error');
     input.classList.add('success');
+    input.setAttribute('aria-invalid', 'false');
     const error = document.getElementById(errorId);
     const success = document.getElementById(successId);
     if (error) error.classList.remove('visible');
@@ -691,6 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function clearState(input, errorId, successId) {
     input.classList.remove('error', 'success');
+    input.removeAttribute('aria-invalid');
     const error = document.getElementById(errorId);
     const success = document.getElementById(successId);
     if (error) error.classList.remove('visible');
