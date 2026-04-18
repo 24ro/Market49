@@ -334,193 +334,327 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 7. CHECKOUT FORM — real-time validation
-  // Validates name, contact, card, expiry, CVC.
-  // Auto-formats card number and expiry as typed.
   // ==========================================
 
   const checkoutForm = document.getElementById('checkout-form');
 
   if (checkoutForm) {
 
-    // Full name — required, must have two words
-    const nameInput = document.getElementById('full-name');
-    if (nameInput) {
-      nameInput.addEventListener('blur', () => validateName());
-      nameInput.addEventListener('input', () => {
-        if (nameInput.value.trim().split(' ').filter(w =>
-          w.length > 0).length >= 2) {
-          setSuccess(nameInput, 'name-error', 'name-success');
-        }
+    // Helper to attach blur + input listeners to a field
+    function attachListeners(inputId, validateFn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      input.addEventListener('blur', () => {
+        input.dataset.touched = 'true';
+        validateFn();
+      });
+      input.addEventListener('input', () => {
+        if (input.dataset.touched) validateFn();
       });
     }
 
+    // Full name — must contain only letters and spaces,
+    // at least two words, each word min 2 characters
     function validateName() {
-      const nameInput = document.getElementById('full-name');
-      const val = nameInput.value.trim();
+      const input = document.getElementById('full-name');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(nameInput, 'name-error', 'Full name is required');
+        setError(input, 'name-error', 'name-success',
+          'Full name is required');
         return false;
       }
-      const words = val.split(' ').filter(w => w.length > 0);
+      if (!/^[a-zA-Z\s'-]+$/.test(val)) {
+        setError(input, 'name-error', 'name-success',
+          'Name can only contain letters');
+        return false;
+      }
+      const words = val.split(/\s+/).filter(w => w.length >= 2);
       if (words.length < 2) {
-        setError(nameInput, 'name-error',
+        setError(input, 'name-error', 'name-success',
           'Please enter your first and last name');
         return false;
       }
-      setSuccess(nameInput, 'name-error', 'name-success');
+      setSuccess(input, 'name-error', 'name-success');
       return true;
     }
+    attachListeners('full-name', validateName);
 
-    // Contact — required, must be valid email or 10 digit phone
-    const contactInput = document.getElementById('contact');
-    if (contactInput) {
-      contactInput.addEventListener('blur', () => validateContact());
-      contactInput.addEventListener('input', () => {
-        if (isValidEmail(contactInput.value) ||
-            isValidPhone(contactInput.value)) {
-          setSuccess(contactInput, 'contact-error', 'contact-success');
-        }
-      });
-    }
-
-    function isValidEmail(val) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-    }
-
-    function isValidPhone(val) {
-      return val.replace(/[\s\-\(\)]/g, '').length === 10 &&
-        /^\d+$/.test(val.replace(/[\s\-\(\)]/g, ''));
-    }
-
+    // Contact — must be valid email format OR exactly
+    // 10 digits (ignoring spaces, dashes, parentheses)
     function validateContact() {
-      const contactInput = document.getElementById('contact');
-      const val = contactInput.value.trim();
+      const input = document.getElementById('contact');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(contactInput, 'contact-error',
+        setError(input, 'contact-error', 'contact-success',
           'Phone or email is required');
         return false;
       }
-      if (!isValidEmail(val) && !isValidPhone(val)) {
-        setError(contactInput, 'contact-error',
-          'Please enter a valid email or 10-digit phone number');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      const digits = val.replace(/[\s\-\(\)\+]/g, '');
+      const phoneValid = /^\d{10}$/.test(digits);
+      if (!emailRegex.test(val) && !phoneValid) {
+        setError(input, 'contact-error', 'contact-success',
+          'Enter a valid email (you@example.com) or 10-digit phone');
         return false;
       }
-      setSuccess(contactInput, 'contact-error', 'contact-success');
+      setSuccess(input, 'contact-error', 'contact-success');
       return true;
     }
+    attachListeners('contact', validateContact);
 
-    // Card number — required, must be 16 digits
-    // Auto-formats as 1234 5678 9012 3456
+    // Street address — required, min 5 characters
+    function validateAddress() {
+      const input = document.getElementById('address');
+      if (!input) return true;
+      const val = input.value.trim();
+      if (val === '') {
+        setError(input, 'address-error', 'address-success',
+          'Street address is required');
+        return false;
+      }
+      if (val.length < 5) {
+        setError(input, 'address-error', 'address-success',
+          'Please enter a complete street address');
+        return false;
+      }
+      setSuccess(input, 'address-error', 'address-success');
+      return true;
+    }
+    attachListeners('address', validateAddress);
+
+    // City — required, letters only, min 2 characters
+    function validateCity() {
+      const input = document.getElementById('city');
+      if (!input) return true;
+      const val = input.value.trim();
+      if (val === '') {
+        setError(input, 'city-error', 'city-success',
+          'City is required');
+        return false;
+      }
+      if (!/^[a-zA-Z\s'-]+$/.test(val) || val.length < 2) {
+        setError(input, 'city-error', 'city-success',
+          'Please enter a valid city name');
+        return false;
+      }
+      setSuccess(input, 'city-error', 'city-success');
+      return true;
+    }
+    attachListeners('city', validateCity);
+
+    // State — required, letters only, min 2 characters
+    function validateState() {
+      const input = document.getElementById('state');
+      if (!input) return true;
+      const val = input.value.trim();
+      if (val === '') {
+        setError(input, 'state-error', 'state-success',
+          'State is required');
+        return false;
+      }
+      if (!/^[a-zA-Z\s]+$/.test(val) || val.length < 2) {
+        setError(input, 'state-error', 'state-success',
+          'Please enter a valid state');
+        return false;
+      }
+      setSuccess(input, 'state-error', 'state-success');
+      return true;
+    }
+    attachListeners('state', validateState);
+
+    // ZIP — required, exactly 5 digits, no letters
+    function validateZip() {
+      const input = document.getElementById('zip');
+      if (!input) return true;
+      // Strip non-digits on input
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g, '').slice(0, 5);
+      });
+      const val = input.value.trim();
+      if (val === '') {
+        setError(input, 'zip-error', 'zip-success',
+          'ZIP code is required');
+        return false;
+      }
+      if (!/^\d{5}$/.test(val)) {
+        setError(input, 'zip-error', 'zip-success',
+          `ZIP must be 5 digits — you have ${val.length}`);
+        return false;
+      }
+      setSuccess(input, 'zip-error', 'zip-success');
+      return true;
+    }
+    attachListeners('zip', validateZip);
+
+    // Card number — exactly 16 digits
+    // Auto formats as 1234 5678 9012 3456
+    // No success until all 16 digits present
     const cardInput = document.getElementById('card-number');
     if (cardInput) {
       cardInput.addEventListener('input', () => {
-        // Strip non-digits then add spaces every 4 digits
-        let val = cardInput.value.replace(/\D/g, '').slice(0, 16);
-        cardInput.value = val.replace(/(.{4})/g, '$1 ').trim();
-        if (val.length === 16) {
-          setSuccess(cardInput, 'card-error', 'card-success');
-        } else {
-          clearState(cardInput, 'card-error', 'card-success');
-        }
+        let digits = cardInput.value.replace(/\D/g, '').slice(0, 16);
+        cardInput.value = digits.replace(/(.{4})/g, '$1 ').trim();
+        if (cardInput.dataset.touched) validateCard();
       });
-      cardInput.addEventListener('blur', () => validateCard());
+      cardInput.addEventListener('blur', () => {
+        cardInput.dataset.touched = 'true';
+        validateCard();
+      });
     }
 
     function validateCard() {
-      const cardInput = document.getElementById('card-number');
-      const digits = cardInput.value.replace(/\D/g, '');
+      const input = document.getElementById('card-number');
+      if (!input) return true;
+      const digits = input.value.replace(/\D/g, '');
       if (digits === '') {
-        setError(cardInput, 'card-error', 'Card number is required');
+        setError(input, 'card-error', 'card-success',
+          'Card number is required');
         return false;
       }
-      if (digits.length !== 16) {
-        setError(cardInput, 'card-error',
-          'Card number must be 16 digits');
+      if (digits.length < 16) {
+        setError(input, 'card-error', 'card-success',
+          `Card number must be 16 digits — you have ${digits.length}`);
         return false;
       }
-      setSuccess(cardInput, 'card-error', 'card-success');
+      setSuccess(input, 'card-error', 'card-success');
       return true;
     }
 
-    // Expiry — required, must be MM/YY format
-    // Auto-inserts / after 2 digits
+    // Expiry — MM must be 01-12, year must not be expired
+    // Auto inserts / after 2 digits
     const expiryInput = document.getElementById('expiry');
     if (expiryInput) {
       expiryInput.addEventListener('input', () => {
-        let val = expiryInput.value.replace(/\D/g, '').slice(0, 4);
-        if (val.length >= 3) {
-          val = val.slice(0, 2) + '/' + val.slice(2);
+        let digits = expiryInput.value.replace(/\D/g, '').slice(0, 4);
+        if (digits.length >= 3) {
+          digits = digits.slice(0, 2) + '/' + digits.slice(2);
         }
-        expiryInput.value = val;
-        if (val.length === 5) {
-          setSuccess(expiryInput, 'expiry-error', 'expiry-success');
-        } else {
-          clearState(expiryInput, 'expiry-error', 'expiry-success');
-        }
+        expiryInput.value = digits;
+        if (expiryInput.dataset.touched) validateExpiry();
       });
-      expiryInput.addEventListener('blur', () => validateExpiry());
+      expiryInput.addEventListener('blur', () => {
+        expiryInput.dataset.touched = 'true';
+        validateExpiry();
+      });
     }
 
     function validateExpiry() {
-      const expiryInput = document.getElementById('expiry');
-      const val = expiryInput.value.trim();
+      const input = document.getElementById('expiry');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(expiryInput, 'expiry-error',
+        setError(input, 'expiry-error', 'expiry-success',
           'Expiration date is required');
         return false;
       }
       if (!/^\d{2}\/\d{2}$/.test(val)) {
-        setError(expiryInput, 'expiry-error',
-          'Please use MM/YY format');
+        setError(input, 'expiry-error', 'expiry-success',
+          'Use MM/YY format — example: 08/27');
         return false;
       }
-      setSuccess(expiryInput, 'expiry-error', 'expiry-success');
+      const month = parseInt(val.slice(0, 2));
+      const year  = parseInt('20' + val.slice(3));
+      if (month < 1 || month > 12) {
+        setError(input, 'expiry-error', 'expiry-success',
+          'Month must be between 01 and 12');
+        return false;
+      }
+      const now = new Date();
+      const currentYear  = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+      if (year < currentYear ||
+         (year === currentYear && month < currentMonth)) {
+        setError(input, 'expiry-error', 'expiry-success',
+          'This card has expired');
+        return false;
+      }
+      setSuccess(input, 'expiry-error', 'expiry-success');
       return true;
     }
 
-    // CVC — required, must be 3 digits
+    // CVC — exactly 3 digits, no letters
+    // No success until all 3 digits present
     const cvcInput = document.getElementById('cvc');
     if (cvcInput) {
       cvcInput.addEventListener('input', () => {
-        // Only allow digits, max 3
         cvcInput.value = cvcInput.value.replace(/\D/g, '').slice(0, 3);
-        if (cvcInput.value.length === 3) {
-          setSuccess(cvcInput, 'cvc-error', 'cvc-success');
-        } else {
-          clearState(cvcInput, 'cvc-error', 'cvc-success');
-        }
+        if (cvcInput.dataset.touched) validateCVC();
       });
-      cvcInput.addEventListener('blur', () => validateCVC());
+      cvcInput.addEventListener('blur', () => {
+        cvcInput.dataset.touched = 'true';
+        validateCVC();
+      });
     }
 
     function validateCVC() {
-      const cvcInput = document.getElementById('cvc');
-      const val = cvcInput.value.trim();
+      const input = document.getElementById('cvc');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(cvcInput, 'cvc-error', 'CVC is required');
+        setError(input, 'cvc-error', 'cvc-success',
+          'CVC is required');
         return false;
       }
-      if (val.length !== 3 || isNaN(val)) {
-        setError(cvcInput, 'cvc-error', 'CVC must be 3 digits');
+      if (val.length < 3) {
+        setError(input, 'cvc-error', 'cvc-success',
+          `CVC must be 3 digits — you have ${val.length}`);
         return false;
       }
-      setSuccess(cvcInput, 'cvc-error', 'cvc-success');
+      setSuccess(input, 'cvc-error', 'cvc-success');
       return true;
     }
 
-    // Submit — runs all validators one final time
+    // Name on card — letters only, min 2 characters
+    function validateCardName() {
+      const input = document.getElementById('card-name');
+      if (!input) return true;
+      const val = input.value.trim();
+      if (val === '') {
+        setError(input, 'card-name-error', 'card-name-success',
+          'Name on card is required');
+        return false;
+      }
+      if (!/^[a-zA-Z\s'-]+$/.test(val) || val.length < 2) {
+        setError(input, 'card-name-error', 'card-name-success',
+          'Please enter the name as it appears on your card');
+        return false;
+      }
+      setSuccess(input, 'card-name-error', 'card-name-success');
+      return true;
+    }
+    attachListeners('card-name', validateCardName);
+
+    // Submit — marks all fields touched then runs all validators
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const nameOk = validateName();
-      const contactOk = validateContact();
-      const cardOk = validateCard();
-      const expiryOk = validateExpiry();
-      const cvcOk = validateCVC();
+      // Force all fields to touched so errors show
+      ['full-name', 'contact', 'address', 'city', 'state',
+       'zip', 'card-number', 'expiry', 'cvc', 'card-name']
+        .forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.dataset.touched = 'true';
+        });
 
-      if (nameOk && contactOk && cardOk && expiryOk && cvcOk) {
+      const nameOk     = validateName();
+      const contactOk  = validateContact();
+      const addressOk  = validateAddress();
+      const cityOk     = validateCity();
+      const stateOk    = validateState();
+      const zipOk      = validateZip();
+      const cardOk     = validateCard();
+      const expiryOk   = validateExpiry();
+      const cvcOk      = validateCVC();
+      const cardNameOk = validateCardName();
+
+      if (nameOk && contactOk && addressOk && cityOk &&
+          stateOk && zipOk && cardOk && expiryOk &&
+          cvcOk && cardNameOk) {
         const overlay = document.getElementById('loading-overlay');
-        const submitBtn = checkoutForm.querySelector('[type="submit"]');
+        const submitBtn =
+          checkoutForm.querySelector('[type="submit"]');
         if (overlay) overlay.classList.add('visible');
         if (submitBtn) submitBtn.classList.add('btn-loading');
         setTimeout(() => {
