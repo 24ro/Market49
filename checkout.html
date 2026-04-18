@@ -7,31 +7,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <style>.success-msg { color: #22c55e; font-size: 0.78rem; font-weight: 500; margin-top: 4px; display: none; }</style>
 </head>
 <body>
 
 <!-- ======= LOADING OVERLAY ======= -->
 <div class="loading-overlay" id="loading-overlay">
     <div class="spinner"></div>
-    <p class="loading-overlay-label">Processing your order...</p>
+    <p class="loading-text">Processing your order...</p>
 </div>
 
+<!-- ======= NAV BAR ======= -->
 <nav class="navbar">
     <a href="index.html" class="logo">Market<span>49</span></a>
-
-    <!-- Desktop nav links — hidden on mobile -->
     <div class="nav-links">
         <a href="listings.html">Browse</a>
         <a href="post-listing.html">Post a Listing</a>
         <a href="manage-listings.html">My Listings</a>
     </div>
-
     <div class="nav-search">
         <label for="search-input" style="display:none">Search</label>
         <input type="text" placeholder="Search listings..."
                id="search-input">
         <div class="search-dropdown" id="search-dropdown"></div>
+        <button class="search-btn" id="search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+        </button>
     </div>
     <div class="nav-actions">
         <a href="cart.html" aria-label="Cart">
@@ -49,7 +54,9 @@
         </a>
         <a href="signin.html">Sign In</a>
         <div class="toggle-pill" id="dark-toggle">
+            <span class="toggle-icon toggle-sun">&#9728;</span>
             <div class="toggle-dot"></div>
+            <span class="toggle-icon toggle-moon">&#9790;</span>
         </div>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
@@ -60,7 +67,7 @@
     <button class="close-menu" id="close-menu">&#10005;</button>
     <a href="index.html">Home</a>
     <a href="listings.html">Browse Listings</a>
-    <a href="cart.html">Cart</a>
+    <a href="cart.html">&#128722; Cart</a>
     <a href="post-listing.html">Post a Listing</a>
     <a href="manage-listings.html">My Listings</a>
     <a href="signin.html">Sign In</a>
@@ -72,7 +79,6 @@
 
     <h1>Checkout</h1>
 
-    <!-- Breadcrumb — shows current step -->
     <div class="breadcrumb">
         <span class="active">Shipping</span>
         <span class="arrow">&#8594;</span>
@@ -89,7 +95,6 @@
 
                 <p class="section-title">Shipping / Pickup</p>
 
-                <!-- Name and contact side by side on desktop -->
                 <div class="form-row">
                     <div class="field-group">
                         <label for="full-name">Full Name</label>
@@ -99,8 +104,12 @@
                                 type="text"
                                 placeholder="Full name"
                         >
-                        <span id="name-error" class="error-msg">This field is required</span>
-                        <span id="name-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="name-error" class="error-msg">
+                            Full name is required
+                        </span>
+                        <span id="name-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                     <div class="field-group">
                         <label for="contact">Phone / Email</label>
@@ -110,8 +119,12 @@
                                 type="text"
                                 placeholder="Phone or email"
                         >
-                        <span id="contact-error" class="error-msg">This field is required</span>
-                        <span id="contact-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="contact-error" class="error-msg">
+                            Phone or email is required
+                        </span>
+                        <span id="contact-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                 </div>
 
@@ -123,10 +136,14 @@
                             type="text"
                             placeholder="Street address"
                     >
-                        <span id="address-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                    <span id="address-error" class="error-msg">
+                        Street address is required
+                    </span>
+                    <span id="address-success" class="success-msg">
+                        &#10003; Looks good!
+                    </span>
                 </div>
 
-                <!-- City, State, ZIP in a row -->
                 <div class="form-row">
                     <div class="field-group">
                         <label for="city">City</label>
@@ -136,7 +153,12 @@
                                 type="text"
                                 placeholder="City"
                         >
-                        <span id="city-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="city-error" class="error-msg">
+                            City is required
+                        </span>
+                        <span id="city-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                     <div class="field-group">
                         <label for="state">State</label>
@@ -146,7 +168,12 @@
                                 type="text"
                                 placeholder="State"
                         >
-                        <span id="state-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="state-error" class="error-msg">
+                            State is required
+                        </span>
+                        <span id="state-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                     <div class="field-group">
                         <label for="zip">ZIP</label>
@@ -155,16 +182,20 @@
                                 class="input-field"
                                 type="text"
                                 placeholder="ZIP"
+                                maxlength="5"
                         >
-                        <span id="zip-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="zip-error" class="error-msg">
+                            ZIP code is required
+                        </span>
+                        <span id="zip-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                 </div>
 
-                <!-- Delivery vs local pickup selector -->
                 <div class="field-group">
                     <label>Delivery Method</label>
                     <div class="pickup-toggle">
-                        <!-- JS can toggle active class between these -->
                         <button type="button"
                                 class="btn-primary pickup-btn active"
                                 id="delivery-btn">
@@ -186,13 +217,17 @@
                             id="card-number"
                             class="input-field"
                             type="text"
-                            placeholder="Card number"
+                            placeholder="1234 5678 9012 3456"
+                            maxlength="19"
                     >
-                    <span id="card-error" class="error-msg">This field is required</span>
-                    <span id="card-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                    <span id="card-error" class="error-msg">
+                        Card number is required
+                    </span>
+                    <span id="card-success" class="success-msg">
+                        &#10003; Looks good!
+                    </span>
                 </div>
 
-                <!-- Expiry, CVC, name in a row -->
                 <div class="form-row">
                     <div class="field-group">
                         <label for="expiry">MM/YY</label>
@@ -201,8 +236,14 @@
                                 class="input-field"
                                 type="text"
                                 placeholder="MM/YY"
+                                maxlength="5"
                         >
-                        <span id="expiry-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="expiry-error" class="error-msg">
+                            Expiration date is required
+                        </span>
+                        <span id="expiry-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                     <div class="field-group">
                         <label for="cvc">CVC</label>
@@ -211,8 +252,14 @@
                                 class="input-field"
                                 type="text"
                                 placeholder="CVC"
+                                maxlength="3"
                         >
-                        <span id="cvc-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="cvc-error" class="error-msg">
+                            CVC is required
+                        </span>
+                        <span id="cvc-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                     <div class="field-group">
                         <label for="card-name">Name on Card</label>
@@ -222,12 +269,19 @@
                                 type="text"
                                 placeholder="Name on card"
                         >
-                        <span id="card-name-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                        <span id="card-name-error" class="error-msg">
+                            Name on card is required
+                        </span>
+                        <span id="card-name-success" class="success-msg">
+                            &#10003; Looks good!
+                        </span>
                     </div>
                 </div>
 
                 <div class="field-group">
-                    <label for="notes">Notes to Seller (optional)</label>
+                    <label for="notes">
+                        Notes to Seller (optional)
+                    </label>
                     <textarea
                             id="notes"
                             class="input-field"
@@ -236,7 +290,6 @@
                     ></textarea>
                 </div>
 
-                <!-- Back goes to listings, Place Order validates then confirms -->
                 <div class="form-actions">
                     <a href="cart.html" class="btn-secondary">
                         Back to Cart
@@ -254,7 +307,6 @@
 
             <h2>Order Summary</h2>
 
-            <!-- Item preview -->
             <div class="order-item">
                 <div class="order-item-img"></div>
                 <div class="order-item-info">
@@ -281,12 +333,11 @@
                 <span>$42.00</span>
             </div>
 
-            <button class="btn-secondary" style="width:100%">
+            <button class="btn-secondary promo-btn">
                 Apply Promo Code
             </button>
 
-            <p style="font-size:11px;color:var(--text-muted);
-               text-align:center;margin-top:12px;">
+            <p class="checkout-note">
                 By placing your order, you agree to the Terms.
             </p>
 
@@ -304,8 +355,6 @@
 </footer>
 
 <script src="js/main.js"></script>
-
-
 
 </body>
 </html>

@@ -1769,3 +1769,13 @@ body.dark .order-total {
   margin-top: 4px;
   transition: color 0.2s ease;
 }
+.success-msg {
+  color: var(--success);
+  font-size: 13px;
+  margin-top: 4px;
+  display: none;
+}
+
+.success-msg.visible {
+  display: block;
+}

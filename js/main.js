@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 1. HAMBURGER MENU
-  // Opens and closes the mobile slide-in menu.
-  // Runs on every page since nav is everywhere.
   // ==========================================
 
   const hamburger = document.getElementById('hamburger');
@@ -31,13 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (closeMenu) {
-    closeMenu.addEventListener('click', closeNav);
-  }
-
-  if (menuOverlay) {
-    menuOverlay.addEventListener('click', closeNav);
-  }
+  if (closeMenu) closeMenu.addEventListener('click', closeNav);
+  if (menuOverlay) menuOverlay.addEventListener('click', closeNav);
 
   if (mobileMenu) {
     mobileMenu.querySelectorAll('a').forEach(link => {
@@ -53,13 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 2. DARK MODE TOGGLE
-  // Flips the .dark class on the body.
-  // localStorage saves preference across pages.
   // ==========================================
 
   const toggle = document.getElementById('dark-toggle');
-
   const savedMode = localStorage.getItem('darkMode');
+
   if (savedMode === 'true') {
     document.body.classList.add('dark');
     if (toggle) toggle.classList.add('active');
@@ -76,9 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 3. SEARCH — real-time filtering
-  // Filters suggestions as user types.
-  // Shows no-results message if nothing matches.
-  // Clears dropdown when input is empty.
   // ==========================================
 
   const searchInput = document.getElementById('search-input');
@@ -139,6 +127,29 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.blur();
       }
     });
+
+    // Search button click navigates to listings
+    const searchBtn = document.getElementById('search-btn');
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        const val = searchInput.value.trim();
+        if (val !== '') {
+          window.location.href =
+            `listings.html?search=${encodeURIComponent(val)}`;
+        }
+      });
+    }
+
+    // Enter key in search bar also navigates
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = searchInput.value.trim();
+        if (val !== '') {
+          window.location.href =
+            `listings.html?search=${encodeURIComponent(val)}`;
+        }
+      }
+    });
   }
 
   // ==========================================
@@ -189,118 +200,118 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (postForm) {
 
-    // Title — required, min 3 characters
     const titleInput = document.getElementById('title');
     if (titleInput) {
       titleInput.addEventListener('blur', () => {
+        titleInput.dataset.touched = 'true';
         validateTitle();
       });
       titleInput.addEventListener('input', () => {
-        // Clear error as soon as user starts fixing it
-        if (titleInput.value.trim().length >= 3) {
-          setSuccess(titleInput, 'title-error', 'title-success');
-        }
+        if (titleInput.dataset.touched) validateTitle();
       });
     }
 
     function validateTitle() {
-      const titleInput = document.getElementById('title');
-      const val = titleInput.value.trim();
+      const input = document.getElementById('title');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(titleInput, 'title-error', 'Title is required');
+        setError(input, 'title-error', 'title-success',
+          'Title is required');
         return false;
       }
       if (val.length < 3) {
-        setError(titleInput, 'title-error',
+        setError(input, 'title-error', 'title-success',
           'Title must be at least 3 characters');
         return false;
       }
-      setSuccess(titleInput, 'title-error', 'title-success');
+      setSuccess(input, 'title-error', 'title-success');
       return true;
     }
 
-    // Price — required, must be a number greater than 0
     const priceInput = document.getElementById('price');
     if (priceInput) {
       priceInput.addEventListener('blur', () => {
+        priceInput.dataset.touched = 'true';
         validatePrice();
       });
       priceInput.addEventListener('input', () => {
-        const val = parseFloat(priceInput.value);
-        if (!isNaN(val) && val > 0) {
-          setSuccess(priceInput, 'price-error', 'price-success');
-        }
+        if (priceInput.dataset.touched) validatePrice();
       });
     }
 
     function validatePrice() {
-      const priceInput = document.getElementById('price');
-      const val = priceInput.value.trim();
+      const input = document.getElementById('price');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(priceInput, 'price-error', 'Price is required');
+        setError(input, 'price-error', 'price-success',
+          'Price is required');
         return false;
       }
       if (isNaN(parseFloat(val))) {
-        setError(priceInput, 'price-error',
+        setError(input, 'price-error', 'price-success',
           'Please enter a valid price');
         return false;
       }
       if (parseFloat(val) <= 0) {
-        setError(priceInput, 'price-error',
+        setError(input, 'price-error', 'price-success',
           'Price must be greater than $0');
         return false;
       }
-      setSuccess(priceInput, 'price-error', 'price-success');
+      setSuccess(input, 'price-error', 'price-success');
       return true;
     }
 
-    // Description — required, min 20 characters
-    // Shows live character count as user types
     const descInput = document.getElementById('description');
     const descCounter = document.getElementById('desc-counter');
     if (descInput) {
       descInput.addEventListener('blur', () => {
+        descInput.dataset.touched = 'true';
         validateDescription();
       });
       descInput.addEventListener('input', () => {
         const len = descInput.value.trim().length;
-        // Update live character counter
         if (descCounter) {
           descCounter.textContent = `${len} / 20 minimum`;
           descCounter.style.color = len >= 20
             ? 'var(--success)' : 'var(--text-secondary)';
         }
-        if (len >= 20) {
-          setSuccess(descInput, 'desc-error', 'desc-success');
-        }
+        if (descInput.dataset.touched) validateDescription();
       });
     }
 
     function validateDescription() {
-      const descInput = document.getElementById('description');
-      const val = descInput.value.trim();
+      const input = document.getElementById('description');
+      if (!input) return true;
+      const val = input.value.trim();
       if (val === '') {
-        setError(descInput, 'desc-error', 'Description is required');
+        setError(input, 'desc-error', 'desc-success',
+          'Description is required');
         return false;
       }
       if (val.length < 20) {
-        setError(descInput, 'desc-error',
+        setError(input, 'desc-error', 'desc-success',
           'Description must be at least 20 characters');
         return false;
       }
-      setSuccess(descInput, 'desc-error', 'desc-success');
+      setSuccess(input, 'desc-error', 'desc-success');
       return true;
     }
 
-    // Submit — runs all validators one final time
     postForm.addEventListener('submit', (e) => {
       e.preventDefault();
+
+      // Mark all fields touched on submit
+      ['title', 'price', 'description'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.dataset.touched = 'true';
+      });
 
       const titleOk = validateTitle();
       const priceOk = validatePrice();
       const descOk = validateDescription();
 
-      // Photo validation
       const photoFileInput = document.getElementById('file-input');
       const photoUploadBox = document.getElementById('upload-box');
       const photoErrorMsg = document.getElementById('photo-error');
@@ -340,7 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (checkoutForm) {
 
-    // Helper to attach blur + input listeners to a field
+    // Attaches blur and input listeners to a field
+    // Only runs validation on input after field is touched
     function attachListeners(inputId, validateFn) {
       const input = document.getElementById(inputId);
       if (!input) return;
@@ -353,8 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Full name — must contain only letters and spaces,
-    // at least two words, each word min 2 characters
+    // Full name — letters only, two words minimum
     function validateName() {
       const input = document.getElementById('full-name');
       if (!input) return true;
@@ -380,8 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('full-name', validateName);
 
-    // Contact — must be valid email format OR exactly
-    // 10 digits (ignoring spaces, dashes, parentheses)
+    // Contact — valid email or 10-digit phone
     function validateContact() {
       const input = document.getElementById('contact');
       if (!input) return true;
@@ -396,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const phoneValid = /^\d{10}$/.test(digits);
       if (!emailRegex.test(val) && !phoneValid) {
         setError(input, 'contact-error', 'contact-success',
-          'Enter a valid email (you@example.com) or 10-digit phone');
+          'Enter a valid email or 10-digit phone number');
         return false;
       }
       setSuccess(input, 'contact-error', 'contact-success');
@@ -424,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('address', validateAddress);
 
-    // City — required, letters only, min 2 characters
+    // City — letters only, min 2 characters
     function validateCity() {
       const input = document.getElementById('city');
       if (!input) return true;
@@ -444,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('city', validateCity);
 
-    // State — required, letters only, min 2 characters
+    // State — letters only, min 2 characters
     function validateState() {
       const input = document.getElementById('state');
       if (!input) return true;
@@ -464,14 +474,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('state', validateState);
 
-    // ZIP — required, exactly 5 digits, no letters
+    // ZIP — exactly 5 digits
+    const zipInput = document.getElementById('zip');
+    if (zipInput) {
+      zipInput.addEventListener('input', () => {
+        // Strip non-digits and cap at 5
+        zipInput.value = zipInput.value.replace(/\D/g, '').slice(0, 5);
+        if (zipInput.dataset.touched) validateZip();
+      });
+      zipInput.addEventListener('blur', () => {
+        zipInput.dataset.touched = 'true';
+        validateZip();
+      });
+    }
+
     function validateZip() {
       const input = document.getElementById('zip');
       if (!input) return true;
-      // Strip non-digits on input
-      input.addEventListener('input', () => {
-        input.value = input.value.replace(/\D/g, '').slice(0, 5);
-      });
       const val = input.value.trim();
       if (val === '') {
         setError(input, 'zip-error', 'zip-success',
@@ -486,11 +505,8 @@ document.addEventListener('DOMContentLoaded', () => {
       setSuccess(input, 'zip-error', 'zip-success');
       return true;
     }
-    attachListeners('zip', validateZip);
 
-    // Card number — exactly 16 digits
-    // Auto formats as 1234 5678 9012 3456
-    // No success until all 16 digits present
+    // Card number — exactly 16 digits, auto-formats
     const cardInput = document.getElementById('card-number');
     if (cardInput) {
       cardInput.addEventListener('input', () => {
@@ -522,8 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // Expiry — MM must be 01-12, year must not be expired
-    // Auto inserts / after 2 digits
+    // Expiry — valid MM/YY, not expired
     const expiryInput = document.getElementById('expiry');
     if (expiryInput) {
       expiryInput.addEventListener('input', () => {
@@ -562,10 +577,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
       }
       const now = new Date();
-      const currentYear  = now.getFullYear();
-      const currentMonth = now.getMonth() + 1;
-      if (year < currentYear ||
-         (year === currentYear && month < currentMonth)) {
+      if (year < now.getFullYear() ||
+         (year === now.getFullYear() &&
+          month < now.getMonth() + 1)) {
         setError(input, 'expiry-error', 'expiry-success',
           'This card has expired');
         return false;
@@ -574,8 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // CVC — exactly 3 digits, no letters
-    // No success until all 3 digits present
+    // CVC — exactly 3 digits
     const cvcInput = document.getElementById('cvc');
     if (cvcInput) {
       cvcInput.addEventListener('input', () => {
@@ -606,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // Name on card — letters only, min 2 characters
+    // Name on card — letters only
     function validateCardName() {
       const input = document.getElementById('card-name');
       if (!input) return true;
@@ -626,11 +639,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('card-name', validateCardName);
 
-    // Submit — marks all fields touched then runs all validators
+    // Submit — marks all touched then runs all validators
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      // Force all fields to touched so errors show
       ['full-name', 'contact', 'address', 'city', 'state',
        'zip', 'card-number', 'expiry', 'cvc', 'card-name']
         .forEach(id => {
@@ -666,112 +678,117 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 8. SIGN IN FORM — real-time validation
-  // Requires 3 meaningful fields: email, 49er ID,
-  // and password. Errors appear inline beside
-  // each field while the user is typing.
+  // Requires charlotte.edu email, 49er ID
+  // starting with 800, and strong password.
   // ==========================================
 
   const signinForm = document.getElementById('signin-form');
 
   if (signinForm) {
-    const emailInput = document.getElementById('email');
+
+    const emailInput    = document.getElementById('email');
     const studentIdInput = document.getElementById('student-id');
     const passwordInput = document.getElementById('password');
 
-    const emailPattern = /^[^\s@]+@charlotte\.edu$/i;
+    const emailPattern    = /^[^\s@]+@charlotte\.edu$/i;
     const studentIdPattern = /^800\d{6}$/;
-    const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordPattern  = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (emailInput) {
-      emailInput.addEventListener('input', validateEmail);
-      emailInput.addEventListener('blur', validateEmail);
+      emailInput.addEventListener('blur', () => {
+        emailInput.dataset.touched = 'true';
+        validateEmail();
+      });
+      emailInput.addEventListener('input', () => {
+        if (emailInput.dataset.touched) validateEmail();
+      });
     }
 
     if (studentIdInput) {
       studentIdInput.addEventListener('input', () => {
-        studentIdInput.value = studentIdInput.value.replace(/\D/g, '').slice(0, 9);
+        // Only allow digits, max 9
+        studentIdInput.value =
+          studentIdInput.value.replace(/\D/g, '').slice(0, 9);
+        if (studentIdInput.dataset.touched) validateStudentId();
+      });
+      studentIdInput.addEventListener('blur', () => {
+        studentIdInput.dataset.touched = 'true';
         validateStudentId();
       });
-      studentIdInput.addEventListener('blur', validateStudentId);
     }
 
     if (passwordInput) {
-      passwordInput.addEventListener('input', validatePassword);
-      passwordInput.addEventListener('blur', validatePassword);
+      passwordInput.addEventListener('blur', () => {
+        passwordInput.dataset.touched = 'true';
+        validatePassword();
+      });
+      passwordInput.addEventListener('input', () => {
+        if (passwordInput.dataset.touched) validatePassword();
+      });
     }
 
     function validateEmail() {
       const val = emailInput.value.trim();
-
       if (val === '') {
-        setError(emailInput, 'email-error', 'Please enter your Charlotte email address.', 'email-success');
+        setError(emailInput, 'email-error', 'email-success',
+          'Please enter your Charlotte email address');
         return false;
       }
-
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-        setError(emailInput, 'email-error', 'Enter a valid email address, like name@charlotte.edu.', 'email-success');
+        setError(emailInput, 'email-error', 'email-success',
+          'Enter a valid email address like name@charlotte.edu');
         return false;
       }
-
       if (!emailPattern.test(val)) {
-        setError(emailInput, 'email-error', 'Use your @charlotte.edu email so we can verify your campus account.', 'email-success');
+        setError(emailInput, 'email-error', 'email-success',
+          'Use your @charlotte.edu email to verify your campus account');
         return false;
       }
-
       setSuccess(emailInput, 'email-error', 'email-success');
       return true;
     }
 
     function validateStudentId() {
       const val = studentIdInput.value.trim();
-
       if (val === '') {
-        setError(studentIdInput, 'student-id-error', 'Enter your 49er ID to sign in to the campus marketplace.', 'student-id-success');
+        setError(studentIdInput, 'student-id-error',
+          'student-id-success',
+          'Enter your 49er ID to sign in');
         return false;
       }
-
-      if (!/^\d+$/.test(val)) {
-        setError(studentIdInput, 'student-id-error', '49er ID should contain numbers only.', 'student-id-success');
-        return false;
-      }
-
       if (!studentIdPattern.test(val)) {
-        setError(studentIdInput, 'student-id-error', '49er ID must be 9 digits and start with 800.', 'student-id-success');
+        setError(studentIdInput, 'student-id-error',
+          'student-id-success',
+          '49er ID must be 9 digits and start with 800');
         return false;
       }
-
-      setSuccess(studentIdInput, 'student-id-error', 'student-id-success');
+      setSuccess(studentIdInput, 'student-id-error',
+        'student-id-success');
       return true;
     }
 
     function validatePassword() {
       const val = passwordInput.value;
-
       if (val === '') {
-        setError(passwordInput, 'password-error', 'Enter your password to continue.', 'password-success');
+        setError(passwordInput, 'password-error', 'password-success',
+          'Enter your password to continue');
         return false;
       }
-
       if (val.length < 8) {
-        setError(passwordInput, 'password-error', 'Password must be at least 8 characters long.', 'password-success');
+        setError(passwordInput, 'password-error', 'password-success',
+          'Password must be at least 8 characters long');
         return false;
       }
-
       if (!/[A-Z]/.test(val)) {
-        setError(passwordInput, 'password-error', 'Add at least 1 uppercase letter so your password is stronger.', 'password-success');
+        setError(passwordInput, 'password-error', 'password-success',
+          'Add at least 1 uppercase letter');
         return false;
       }
-
       if (!/\d/.test(val)) {
-        setError(passwordInput, 'password-error', 'Add at least 1 number to finish meeting the password rules.', 'password-success');
+        setError(passwordInput, 'password-error', 'password-success',
+          'Add at least 1 number');
         return false;
       }
-
-      if (!passwordPattern.test(val)) {
-        setError(passwordInput, 'password-error', 'Password does not meet the sign-in requirements yet.', 'password-success');
-        return false;
-      }
-
       setSuccess(passwordInput, 'password-error', 'password-success');
       return true;
     }
@@ -779,9 +796,15 @@ document.addEventListener('DOMContentLoaded', () => {
     signinForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const emailOk = validateEmail();
+      // Mark all touched on submit
+      ['email', 'student-id', 'password'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.dataset.touched = 'true';
+      });
+
+      const emailOk     = validateEmail();
       const studentIdOk = validateStudentId();
-      const passwordOk = validatePassword();
+      const passwordOk  = validatePassword();
 
       if (emailOk && studentIdOk && passwordOk) {
         window.location.href = 'index.html';
@@ -791,22 +814,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // SHARED HELPERS
-  // setError — shows error border and message
-  // setSuccess — shows success border and message
-  // clearState — removes both states
+  // Consistent argument order across all sections:
+  // setError(input, errorId, successId, message)
+  // setSuccess(input, errorId, successId)
+  // clearState(input, errorId, successId)
   // ==========================================
 
-  function setError(input, errorId, message, successId) {
-    input.classList.add('error');
+  function setError(input, errorId, successId, message) {
     input.classList.remove('success');
+    input.classList.add('error');
     input.setAttribute('aria-invalid', 'true');
     const error = document.getElementById(errorId);
     const success = document.getElementById(successId);
     if (error) {
-      error.textContent = message;
+      if (message) error.textContent = message;
       error.classList.add('visible');
+      error.style.display = 'block';
     }
-    if (success) success.classList.remove('visible');
+    if (success) {
+      success.classList.remove('visible');
+      success.style.display = 'none';
+    }
   }
 
   function setSuccess(input, errorId, successId) {
@@ -815,8 +843,14 @@ document.addEventListener('DOMContentLoaded', () => {
     input.setAttribute('aria-invalid', 'false');
     const error = document.getElementById(errorId);
     const success = document.getElementById(successId);
-    if (error) error.classList.remove('visible');
-    if (success) success.classList.add('visible');
+    if (error) {
+      error.classList.remove('visible');
+      error.style.display = 'none';
+    }
+    if (success) {
+      success.classList.add('visible');
+      success.style.display = 'block';
+    }
   }
 
   function clearState(input, errorId, successId) {
@@ -824,12 +858,25 @@ document.addEventListener('DOMContentLoaded', () => {
     input.removeAttribute('aria-invalid');
     const error = document.getElementById(errorId);
     const success = document.getElementById(successId);
-    if (error) error.classList.remove('visible');
-    if (success) success.classList.remove('visible');
+    if (error) {
+      error.classList.remove('visible');
+      error.style.display = 'none';
+    }
+    if (success) {
+      success.classList.remove('visible');
+      success.style.display = 'none';
+    }
+  }
+
+  function markTouched(id) {
+    const el = document.getElementById(id);
+    if (el) el.dataset.touched = 'true';
   }
 
   // ==========================================
   // 9. LISTINGS SKELETON → REAL CARDS
+  // Page loads, skeleton shows briefly,
+  // then real cards fade in after 1 second.
   // ==========================================
 
   const skeletonGrid = document.getElementById('skeleton-grid');
@@ -869,6 +916,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// handleSuggestion — outside DOMContentLoaded
+// so onclick in dropdown HTML can call it globally
 function handleSuggestion(term) {
   window.location.href =
     `listings.html?search=${encodeURIComponent(term)}`;
