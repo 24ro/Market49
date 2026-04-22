@@ -22,6 +22,12 @@
 
     <div class="nav-search">
         <label for="search-input" style="display:none">Search</label>
+        <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
         <input type="text" placeholder="Search listings..."
                id="search-input">
         <div class="search-dropdown" id="search-dropdown"></div>
@@ -42,7 +48,10 @@
         </a>
         <a href="signin.html">Sign In</a>
         <div class="toggle-pill" id="dark-toggle">
-            <div class="toggle-dot"></div>
+            <div class="toggle-dot">
+                <span class="toggle-sun">&#9728;</span>
+                <span class="toggle-moon">&#9790;</span>
+            </div>
         </div>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>

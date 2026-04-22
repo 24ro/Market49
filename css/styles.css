@@ -1,16 +1,16 @@
 /* ============================================
-   STYLE.CSS — Market49
+   STYLES.CSS — Market49
    Single stylesheet for the entire site.
    Organized in sections:
-   1. Variables
-   2. Reset + Base
-   3. Buttons
-   4. Inputs + Forms
-   5. Nav Bar
-   6. Mobile Menu
-   7. Dark Mode Toggle
-   8. Search Dropdown
-   9. Footer
+   1.  Variables
+   2.  Reset + Base
+   3.  Buttons
+   4.  Inputs + Forms
+   5.  Nav Bar
+   6.  Mobile Menu
+   7.  Dark Mode Toggle
+   8.  Search Dropdown
+   9.  Footer
    10. Home Page
    11. Listings Page
    12. Listing Detail Page
@@ -24,35 +24,32 @@
    20. Desktop Media Queries
    21. Loading States
    22. Micro-Animations
+   23. Focus States
    ============================================ */
 
 /* ============================================
    1. VARIABLES
-   Brand colors used across every page.
-   Edit here to change the whole site.
    ============================================ */
 :root {
-  --green: #154734;
-  --gold: #FDB913;
-  --white: #FFFFFF;
-  --surface: #F5F5F5;
-  --border: #E0E0E0;
-  --text-primary: #1A1A1A;
-  --text-secondary: #666666;
-  --text-muted: #666666;
-  --error: #D32F2F;
-  --success: #2E7D32;
-  --dark-bg: #121212;
-  --dark-surface: #1E1E1E;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --nav-h: 72px;
+  --green:          #154734;
+  --gold:           #FDB913;
+  --white:          #FFFFFF;
+  --surface:        #F5F5F5;
+  --border:         #E0E0E0;
+  --text-primary:   #1A1A1A;
+  --text-secondary: #595959; /* was #666 — updated to pass WCAG AA */
+  --text-muted:     #595959;
+  --error:          #D32F2F;
+  --success:        #2E7D32;
+  --dark-bg:        #121212;
+  --dark-surface:   #1E1E1E;
+  --radius-sm:      8px;
+  --radius-md:      12px;
+  --nav-h:          72px;
 }
 
 /* ============================================
    2. RESET + BASE
-   Removes browser defaults and sets
-   the base font and layout behavior.
    ============================================ */
 * {
   box-sizing: border-box;
@@ -60,22 +57,23 @@
   padding: 0;
 }
 
+/* Base font size — all rem values are relative
+   to this. Changing this scales everything. */
+html {
+  font-size: 16px;
+}
+
 @keyframes pageFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 body {
   font-family: 'Inter', sans-serif;
   background: var(--white);
   color: var(--text-primary);
-  font-size: 16px;
+  /* rem so body text scales with browser zoom */
+  font-size: 1rem;
   line-height: 1.5;
   overflow-x: hidden;
   min-height: 100vh;
@@ -84,24 +82,36 @@ body {
   transition: background 0.35s ease, color 0.35s ease;
 }
 
-/* Stretches content to fill space */
 main {
   flex: 1;
   animation: pageFadeUp 0.4s ease;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
 /* ============================================
    3. BUTTONS
-   Primary = green fill, Secondary = outlined.
-   Full width on mobile, auto width on desktop.
    ============================================ */
 .btn-primary {
   background: var(--green);
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 14px 24px;
-  font-size: 16px;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   display: block;
@@ -110,19 +120,21 @@ main {
   text-decoration: none;
   font-family: 'Inter', sans-serif;
   position: relative;
-  transition:
-    transform 0.1s ease,
-    opacity 0.1s ease,
-    background-color 0.1s ease;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+  /* Min height ensures tap target meets accessibility standard */
+  min-height: 44px;
 }
+
+.btn-primary:hover  { opacity: 0.88; }
+.btn-primary:active { transform: scale(0.97); }
 
 .btn-secondary {
   background: transparent;
   color: var(--green);
   border: 2px solid var(--green);
   border-radius: 8px;
-  padding: 14px 24px;
-  font-size: 16px;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   display: block;
@@ -130,28 +142,29 @@ main {
   text-align: center;
   text-decoration: none;
   font-family: 'Inter', sans-serif;
-  transition:
-    transform 0.1s ease,
-    opacity 0.1s ease,
-    background-color 0.1s ease;
+  min-height: 44px;
+  transition: transform 0.1s ease, background 0.2s ease;
 }
 
-.btn-primary:active,
-.btn-secondary:active {
-  transform: scale(0.97);
+.btn-secondary:hover  { background: rgba(21,71,52,0.06); }
+.btn-secondary:active { transform: scale(0.97); }
+
+/* Dark mode secondary uses gold */
+body.dark .btn-secondary {
+  color: var(--gold);
+  border-color: var(--gold);
 }
 
 /* ============================================
    4. INPUTS + FORMS
-   Shared across post-listing, checkout,
-   signin, and any other form page.
    ============================================ */
 .input-field {
   width: 100%;
   border: 1.5px solid var(--border);
   border-radius: 8px;
-  padding: 12px 14px;
-  font-size: 16px;
+  padding: 0.75rem 0.875rem;
+  /* rem so inputs scale with browser zoom */
+  font-size: 1rem;
   font-family: 'Inter', sans-serif;
   background: var(--white);
   color: var(--text-primary);
@@ -161,120 +174,168 @@ main {
 .input-field:focus {
   outline: none;
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(21, 71, 52, 0.18);
+  box-shadow: 0 0 0 3px rgba(21,71,52,0.18);
 }
 
-.input-field.error {
-  border-color: var(--error);
+.input-field.error   { border-color: var(--error); }
+.input-field.success { border-color: var(--success); }
+
+/* Placeholder contrast — #767676 passes 4.5:1 on white */
+.input-field::placeholder {
+  color: #767676;
 }
 
-.input-field.success {
-  border-color: var(--success);
+textarea.input-field {
+  resize: vertical;
 }
 
 .helper-msg {
   display: block;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-secondary);
   margin-top: 6px;
 }
 
-/* Error and success messages sit directly under each field */
 .error-msg,
 .success-msg {
-  font-size: 13px;
+  font-size: 0.8125rem;
   margin-top: 6px;
   display: none;
 }
 
-.error-msg {
-  color: var(--error);
-}
+.error-msg   { color: var(--error); }
+.success-msg { color: var(--success); }
 
-.success-msg {
-  color: var(--success);
-}
-
-/* JS adds this class to reveal the message */
 .error-msg.visible,
 .success-msg.visible {
   display: block;
 }
 
-/* Label + input wrapper */
 .field-group {
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .field-group label {
   display: block;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
   margin-bottom: 6px;
 }
 
-/* Two inputs side by side — stacked on mobile */
 .form-row {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
+.field-counter {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  transition: color 0.2s ease;
+}
+
 /* ============================================
    5. NAV BAR
-   Sticky green bar at the top of every page.
-   Shows hamburger on mobile, full nav on desktop.
    ============================================ */
 .navbar {
   background: var(--green);
   padding: 0 16px;
-  height: 64px;
+  height: var(--nav-h);
   display: flex;
   align-items: center;
   gap: 16px;
   position: sticky;
   top: 0;
   z-index: 100;
+  border: none;
+  box-shadow: none;
 }
 
-/* Logo — "Market" white, "49" gold */
 .logo {
   color: white;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.logo span {
-  color: var(--gold);
+.logo span { color: var(--gold); }
+
+/* Desktop nav links */
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  margin-left: 8px;
 }
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover { opacity: 1; }
 
 /* Search bar */
 .nav-search {
-  display: block;
+  display: flex;
   position: relative;
   flex: 1;
   min-width: 80px;
+  align-items: center;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
 }
 
 .nav-search input {
-  width: 100%;
-  border-radius: 24px;
+  flex: 1;
+  height: 40px;
   border: none;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 0 16px;
+  font-size: 0.875rem;
   font-family: 'Inter', sans-serif;
   outline: none;
-  background: white;
+  background: transparent;
   color: var(--text-primary);
+  min-width: 0;
 }
 
+/* Placeholder contrast in nav — #767676 passes 4.5:1 */
 .nav-search input::placeholder {
-  color: #999;
+  color: #767676;
 }
 
-/* Cart, Sign In, toggle — hidden on mobile */
+/* Search button inside pill */
+.search-btn {
+  background: var(--green);
+  border: none;
+  height: 40px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.search-btn:hover { background: #1a5c3a; }
+
+.search-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: white;
+}
+
+/* Cart, Sign In, toggle */
 .nav-actions {
   display: none;
   align-items: center;
@@ -285,13 +346,12 @@ main {
 .nav-actions a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   display: flex;
   align-items: center;
 }
 
-/* Cart SVG icon */
 .cart-icon {
   width: 26px;
   height: 26px;
@@ -300,13 +360,12 @@ main {
   stroke-width: 1.8;
 }
 
-/* Hamburger — only visible on mobile */
 .hamburger {
   margin-left: auto;
   background: none;
   border: none;
   color: white;
-  font-size: 26px;
+  font-size: 1.625rem;
   cursor: pointer;
   padding: 8px;
   line-height: 1;
@@ -314,11 +373,8 @@ main {
   align-items: center;
 }
 
-
 /* ============================================
    6. MOBILE MENU
-   Slides in from the left when hamburger
-   is clicked. JS adds .open to trigger it.
    ============================================ */
 .mobile-menu {
   position: fixed;
@@ -334,32 +390,35 @@ main {
   transition: left 0.3s ease;
 }
 
-.mobile-menu.open {
-  left: 0;
-}
+.mobile-menu.open { left: 0; }
 
 .mobile-menu a {
   color: white;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 500;
   padding: 16px 0;
   border-bottom: 1px solid rgba(255,255,255,0.15);
   display: block;
 }
 
+.mobile-menu a:hover {
+  background: rgba(255,255,255,0.08);
+  padding-left: 8px;
+  transition: padding-left 0.15s ease;
+}
+
 .close-menu {
   background: none;
   border: none;
   color: white;
-  font-size: 22px;
+  font-size: 1.375rem;
   cursor: pointer;
   align-self: flex-end;
   margin-bottom: 16px;
   padding: 4px 8px;
 }
 
-/* Dark overlay behind open menu */
 .menu-overlay {
   display: none;
   position: fixed;
@@ -368,47 +427,47 @@ main {
   z-index: 150;
 }
 
-.menu-overlay.visible {
-  display: block;
-}
+.menu-overlay.visible { display: block; }
 
 /* ============================================
    7. DARK MODE TOGGLE
-   Pill-shaped toggle in the nav bar.
-   Gold when active, slides dot right.
+   Sun icon sits on the moving dot.
    ============================================ */
 .toggle-pill {
-  width: 48px;
-  height: 26px;
+  width: 52px;
+  height: 28px;
   background: rgba(255,255,255,0.25);
-  border-radius: 13px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   padding: 3px;
   cursor: pointer;
   transition: background 0.3s;
+  flex-shrink: 0;
 }
 
-.toggle-pill.active {
-  background: var(--gold);
-}
+.toggle-pill.active { background: var(--gold); }
 
 .toggle-dot {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background: white;
   border-radius: 50%;
   transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #333;
+  line-height: 1;
 }
 
 .toggle-pill.active .toggle-dot {
-  transform: translateX(22px);
+  transform: translateX(24px);
 }
 
 /* ============================================
    8. SEARCH DROPDOWN
-   Appears below the search bar when focused.
-   JS adds .visible to show it.
    ============================================ */
 .search-dropdown {
   position: absolute;
@@ -420,7 +479,6 @@ main {
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
   z-index: 100;
   overflow: hidden;
-  display: block;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -435,29 +493,34 @@ main {
 
 .suggestion {
   padding: 12px 20px;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   border-bottom: 1px solid var(--border);
   color: var(--text-primary);
+  transition: background 0.15s ease;
 }
 
-.suggestion:last-child {
-  border-bottom: none;
+.suggestion:last-child { border-bottom: none; }
+.suggestion:hover { background: var(--surface); }
+
+.suggestion.no-results {
+  color: var(--text-secondary);
+  font-style: italic;
+  cursor: default;
+  padding: 14px 20px;
 }
 
-.suggestion:hover {
-  background: var(--surface);
-}
+.suggestion.no-results:hover { background: none; }
 
 /* ============================================
    9. FOOTER
-   Light gray bar at the bottom of every page.
    ============================================ */
 footer {
   background: var(--surface);
   text-align: center;
   padding: 28px 16px;
-  font-size: 13px;
+  /* rem so footer text scales with zoom */
+  font-size: 0.8125rem;
   color: var(--text-secondary);
   line-height: 2.2;
   margin-top: 48px;
@@ -466,7 +529,6 @@ footer {
 
 /* ============================================
    10. HOME PAGE
-   Hero section with headline and two buttons.
    ============================================ */
 .home-hero {
   padding: 48px 24px;
@@ -474,19 +536,18 @@ footer {
 }
 
 .home-hero h1 {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 600;
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .home-hero p {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-secondary);
   margin-bottom: 32px;
 }
 
-/* Buttons stacked on mobile */
 .hero-buttons {
   display: flex;
   flex-direction: column;
@@ -497,24 +558,22 @@ footer {
 
 /* ============================================
    11. LISTINGS PAGE
-   2-column card grid on mobile,
-   3-column on desktop.
    ============================================ */
-.listings-page {
-  padding: 24px 16px;
+.section-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  padding: 24px 16px 8px;
 }
 
-.listings-page h1 {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 20px;
+.listings-container {
+  padding: 0 24px;
 }
 
 .listings-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  transition: opacity 0.5s ease;
+  padding: 16px 0;
 }
 
 .card {
@@ -529,18 +588,19 @@ footer {
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
 }
 
 .card-img {
   width: 100%;
-  height: 130px;
+  aspect-ratio: 4/3;
   background: var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 0.75rem;
+  overflow: hidden;
 }
 
 .card-img img {
@@ -550,11 +610,8 @@ footer {
   display: block;
 }
 
-.card-body {
-  padding: 10px 12px 14px;
-}
+.card-body { padding: 10px 12px 14px; }
 
-/* Card body row — name/price on left, icons on right */
 .card-body-row {
   display: flex;
   align-items: center;
@@ -567,9 +624,8 @@ footer {
   min-width: 0;
 }
 
-/* Prevents long names from pushing icons off card */
 .card-name {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--green);
   margin-bottom: 4px;
@@ -579,9 +635,9 @@ footer {
 }
 
 .card-price {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--green);
-  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .card-actions {
@@ -595,16 +651,20 @@ footer {
   border: none;
   cursor: pointer;
   padding: 4px;
-  font-size: 16px;
+  font-size: 1rem;
+  /* Minimum tap target */
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.star-icon { color: var(--gold); }
+.star-icon   { color: var(--gold); }
 .delete-icon { color: var(--error); }
 
 /* ============================================
    12. LISTING DETAIL PAGE
-   Image stacks above info on mobile,
-   side by side on desktop.
    ============================================ */
 .detail-page {
   padding: 24px 16px;
@@ -612,9 +672,7 @@ footer {
   margin: 0 auto;
 }
 
-.detail-img-wrap {
-  margin-bottom: 24px;
-}
+.detail-img-wrap { margin-bottom: 24px; }
 
 .detail-img {
   width: 100%;
@@ -625,25 +683,33 @@ footer {
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 0.875rem;
+  overflow: hidden;
+}
+
+.detail-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 .detail-title {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 600;
   margin-bottom: 10px;
   line-height: 1.3;
 }
 
 .detail-price {
-  font-size: 30px;
+  font-size: 1.875rem;
   font-weight: 700;
   color: var(--green);
   margin-bottom: 10px;
 }
 
 .detail-seller {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-secondary);
   margin-bottom: 16px;
 }
@@ -660,7 +726,7 @@ footer {
 }
 
 .detail-description {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: 20px;
@@ -671,28 +737,21 @@ footer {
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
-.meta-label {
-  color: var(--text-secondary);
-}
-
-.meta-value {
-  color: var(--text-primary);
-  font-weight: 500;
-}
+.meta-label  { color: var(--text-secondary); }
+.meta-value  { color: var(--text-primary); font-weight: 500; }
 
 .detail-badge {
   background: rgba(21,71,52,0.1);
   color: var(--green);
   border-radius: 20px;
   padding: 3px 12px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
-/* Buttons stacked on mobile */
 .detail-actions {
   display: flex;
   flex-direction: column;
@@ -702,7 +761,6 @@ footer {
 
 /* ============================================
    13. POST LISTING PAGE
-   Form with title, price, photo, description.
    ============================================ */
 .post-page {
   padding: 24px 16px;
@@ -710,22 +768,19 @@ footer {
   margin: 0 auto;
 }
 
-.post-header {
-  margin-bottom: 28px;
-}
+.post-header { margin-bottom: 28px; }
 
 .post-header h1 {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 6px;
 }
 
 .post-header p {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
-/* Dashed upload area */
 .upload-box {
   border: 2px dashed var(--border);
   border-radius: 8px;
@@ -733,38 +788,32 @@ footer {
   text-align: center;
   cursor: pointer;
   transition: border-color 0.2s;
+  margin-bottom: 4px;
 }
 
-.upload-box:hover {
-  border-color: var(--green);
-}
+.upload-box:hover { border-color: var(--green); }
 
-.upload-icon {
-  font-size: 28px;
-  margin-bottom: 8px;
-}
+.upload-icon  { font-size: 1.75rem; margin-bottom: 8px; }
 
 .upload-label {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 4px;
 }
 
 .upload-hint {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 
-/* File name shown after selection */
 .upload-name {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--green);
-  margin-top: 8px;
-  min-height: 20px;
+  margin-top: 6px;
+  min-height: 18px;
 }
 
-/* Condition pill buttons */
 .condition-options {
   display: flex;
   flex-wrap: wrap;
@@ -776,21 +825,20 @@ footer {
   border: 1.5px solid var(--border);
   border-radius: 20px;
   padding: 8px 18px;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
+  min-height: 44px;
   transition: all 0.2s ease;
 }
 
-/* Selected condition pill */
 .condition-btn.active {
   background: var(--green);
   border-color: var(--green);
   color: white;
 }
 
-/* Radio options for exchange method */
 .exchange-options {
   display: flex;
   flex-direction: column;
@@ -801,7 +849,7 @@ footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
 }
 
@@ -812,40 +860,32 @@ footer {
   cursor: pointer;
 }
 
-/* Cancel + submit stacked on mobile */
 .form-actions {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 24px;
 }
 
-/* Cancel always centered regardless of width */
-.form-actions .btn-secondary {
-  text-align: center;
-}
+.form-actions .btn-secondary { text-align: center; }
 
 /* ============================================
    14. CHECKOUT PAGE
-   Form left, order summary right on desktop.
    ============================================ */
-.checkout-page {
-  padding: 24px 16px;
-}
+.checkout-page { padding: 24px 16px; }
 
 .checkout-page h1 {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 6px;
 }
 
 .breadcrumb {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-secondary);
   margin-bottom: 24px;
 }
 
-/* Stacked on mobile */
 .checkout-layout {
   display: flex;
   flex-direction: column;
@@ -853,24 +893,20 @@ footer {
 }
 
 .section-title {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 16px;
   margin-top: 8px;
 }
 
-/* Delivery / pickup toggle */
 .pickup-toggle {
   display: flex;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.pickup-toggle button {
-  flex: 1;
-}
+.pickup-toggle button { flex: 1; }
 
-/* Order summary card */
 .order-summary {
   background: var(--surface);
   border-radius: 12px;
@@ -878,7 +914,7 @@ footer {
 }
 
 .order-summary h2 {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -899,25 +935,25 @@ footer {
 }
 
 .order-item-info p:first-child {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
 .order-item-info p:last-child {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 
 .order-item-price {
   margin-left: auto;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
 .order-row {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
   margin-bottom: 8px;
 }
@@ -925,7 +961,7 @@ footer {
 .order-total {
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   border-top: 1px solid var(--border);
   padding-top: 12px;
@@ -934,7 +970,7 @@ footer {
 }
 
 .order-note {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-secondary);
   text-align: center;
   margin-top: 12px;
@@ -947,9 +983,20 @@ footer {
   margin-top: 24px;
 }
 
+.promo-btn {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.checkout-note {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 12px;
+}
+
 /* ============================================
    15. SIGN IN PAGE
-   Centered card with email and password fields.
    ============================================ */
 .signin-page {
   padding: 40px 16px;
@@ -966,14 +1013,14 @@ footer {
 }
 
 .signin-card h1 {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 600;
   text-align: center;
   margin-bottom: 8px;
 }
 
 .signin-card > p {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
   text-align: center;
   margin-bottom: 24px;
@@ -982,20 +1029,19 @@ footer {
 .forgot-link {
   display: block;
   text-align: right;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--green);
   text-decoration: none;
   margin-bottom: 20px;
 }
 
-/* "or" divider between sign in and create account */
 .divider {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 20px 0;
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .divider::before,
@@ -1006,14 +1052,17 @@ footer {
   background: var(--border);
 }
 
+.signin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
 /* ============================================
    16. MANAGE LISTINGS PAGE
-   Table-style rows with image, name, price,
-   status badge, and action icons.
    ============================================ */
-.manage-page {
-  padding: 24px 16px;
-}
+.manage-page { padding: 24px 16px; }
 
 .manage-header {
   display: flex;
@@ -1024,22 +1073,21 @@ footer {
 }
 
 .manage-header h1 {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 4px;
 }
 
 .manage-header p {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
-/* New Listing button stays compact */
 .manage-header .btn-primary {
   width: auto;
   white-space: nowrap;
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   padding: 10px 16px;
 }
 
@@ -1059,18 +1107,16 @@ footer {
   flex-shrink: 0;
 }
 
-.row-info {
-  flex: 1;
-}
+.row-info { flex: 1; }
 
 .row-name {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 2px;
 }
 
 .row-price {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--green);
 }
 
@@ -1079,7 +1125,7 @@ footer {
   color: var(--green);
   border-radius: 20px;
   padding: 4px 12px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -1087,22 +1133,11 @@ footer {
 .row-icons {
   display: flex;
   gap: 12px;
-  font-size: 20px;
-}
-
-.star-icon {
-  color: var(--gold);
-  cursor: pointer;
-}
-
-.delete-icon {
-  color: var(--error);
-  cursor: pointer;
+  font-size: 1.25rem;
 }
 
 /* ============================================
    17. ORDER CONFIRMED PAGE
-   Centered checkmark and confirmation message.
    ============================================ */
 .confirmation-page {
   padding: 80px 24px;
@@ -1117,13 +1152,13 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 2.5rem;
   color: var(--green);
   margin: 0 auto 24px;
 }
 
 .confirmation-page h1 {
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 600;
   margin-bottom: 12px;
 }
@@ -1140,27 +1175,21 @@ footer {
 
 /* ============================================
    18. CART PAGE
-   Cart items on left, order summary on right.
-   Stacked on mobile, side by side on desktop.
    ============================================ */
-.cart-page {
-  padding: 24px 16px;
-}
+.cart-page { padding: 24px 16px; }
 
 .cart-page h1 {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 24px;
 }
 
-/* Stacked on mobile */
 .cart-layout {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Each cart item row */
 .cart-item {
   display: flex;
   gap: 16px;
@@ -1168,7 +1197,6 @@ footer {
   padding: 16px 0;
 }
 
-/* Item thumbnail placeholder */
 .cart-item-img {
   width: 80px;
   height: 80px;
@@ -1177,12 +1205,10 @@ footer {
   flex-shrink: 0;
 }
 
-.cart-item-info {
-  flex: 1;
-}
+.cart-item-info { flex: 1; }
 
 .cart-item-name {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 4px;
@@ -1190,12 +1216,11 @@ footer {
 
 .cart-item-seller,
 .cart-item-condition {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-muted);
   margin-bottom: 2px;
 }
 
-/* Price and remove button aligned right */
 .cart-item-right {
   display: flex;
   flex-direction: column;
@@ -1205,104 +1230,55 @@ footer {
 }
 
 .cart-item-price {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--green);
 }
 
-/* Remove button — subtle red text, no background */
 .cart-remove-btn {
   background: none;
   border: none;
   color: var(--error);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   padding: 0;
   font-family: 'Inter', sans-serif;
 }
 
-.cart-remove-btn:hover {
-  text-decoration: underline;
-}
+.cart-remove-btn:hover { text-decoration: underline; }
 
-/* Thin line between cart items */
 .cart-divider {
   height: 1px;
   background: var(--border);
 }
 
-/* Keep shopping link */
 .cart-keep-shopping {
   display: inline-block;
   margin-top: 16px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--green);
   font-weight: 500;
 }
 
-.cart-keep-shopping:hover {
-  text-decoration: underline;
-}
+.cart-keep-shopping:hover { text-decoration: underline; }
 
-/* Order summary card */
-.order-summary {
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  padding: 24px;
-}
-
-/* Divider inside summary */
 .cart-summary-divider {
   height: 1px;
   background: var(--border);
   margin: 12px 0;
 }
 
-/* Terms note below checkout button */
 .cart-terms {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-muted);
   text-align: center;
   margin-top: 12px;
 }
 
-/* Desktop — items and summary side by side */
-@media (min-width: 768px) {
-  .cart-page {
-    padding: 40px 48px;
-  }
-
-  .cart-page h1 {
-    font-size: 32px;
-  }
-
-  .cart-layout {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .cart-items {
-    flex: 1.5;
-  }
-
-  .order-summary {
-    flex: 1;
-    position: sticky;
-    top: calc(var(--nav-h) + 16px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .cart-page {
-    padding: 48px 80px;
-  }
-}
-
 /* ============================================
    19. DARK MODE OVERRIDES
    Applied when body has .dark class.
-   JS toggles this via the nav toggle.
    ============================================ */
 body.dark {
   background: var(--dark-bg);
@@ -1311,11 +1287,13 @@ body.dark {
 
 body.dark nav {
   background: var(--dark-surface);
+  border: none;
+  box-shadow: none;
 }
 
 body.dark footer {
   background: var(--dark-surface);
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.6);
   border-top-color: #333;
 }
 
@@ -1325,41 +1303,39 @@ body.dark .input-field {
   color: white;
 }
 
+body.dark .input-field::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+body.dark .input-field:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(253,185,19,0.2);
+}
+
 body.dark .card {
   background: var(--dark-surface);
 }
 
-body.dark .card-name {
-  color: var(--gold);
-}
+body.dark .card-name  { color: var(--gold); }
+body.dark .card-price { color: var(--gold); }
 
-body.dark .order-summary {
-  background: var(--dark-surface);
-}
+body.dark .order-summary { background: var(--dark-surface); }
+body.dark .signin-card   { background: var(--dark-surface); }
 
-body.dark .signin-card {
-  background: var(--dark-surface);
-}
+body.dark .detail-img      { background: var(--dark-surface); }
+body.dark .detail-divider  { background: #333; }
+body.dark .detail-title    { color: white; }
+body.dark .detail-price    { color: var(--gold); }
+body.dark .detail-description,
+body.dark .detail-seller,
+body.dark .meta-label      { color: rgba(255,255,255,0.6); }
+body.dark .meta-value,
+body.dark .seller-name     { color: white; }
 
-body.dark .detail-img {
-  background: var(--dark-surface);
-}
-
-body.dark .detail-divider {
-  background: #333;
-}
-
-body.dark .upload-box {
-  border-color: #333;
-}
-
-body.dark .upload-box:hover {
-  border-color: var(--gold);
-}
-
-body.dark .upload-label {
-  color: white;
-}
+body.dark .upload-box         { border-color: #333; }
+body.dark .upload-box:hover   { border-color: var(--gold); }
+body.dark .upload-label       { color: white; }
+body.dark .upload-hint        { color: rgba(255,255,255,0.5); }
 
 body.dark .condition-btn {
   border-color: #333;
@@ -1372,67 +1348,101 @@ body.dark .condition-btn.active {
   color: white;
 }
 
-body.dark .listing-row {
-  border-color: #333;
+body.dark .exchange-option { color: rgba(255,255,255,0.8); }
+
+body.dark .listing-row { border-color: #333; }
+body.dark .row-img     { background: #333; }
+body.dark .row-name    { color: white; }
+
+body.dark .order-total  { border-color: #333; }
+body.dark .order-row    { color: rgba(255,255,255,0.6); }
+body.dark .order-note,
+body.dark .checkout-note,
+body.dark .cart-terms   { color: rgba(255,255,255,0.5); }
+
+body.dark .order-item-info p:first-child { color: white; }
+body.dark .order-item-info p:last-child  {
+  color: rgba(255,255,255,0.6);
 }
 
-body.dark .order-total {
-  border-color: #333;
+body.dark .breadcrumb  { color: rgba(255,255,255,0.6); }
+body.dark .section-title { color: white; }
+
+body.dark .checkout-page h1,
+body.dark .cart-page h1,
+body.dark .manage-header h1,
+body.dark .post-header h1,
+body.dark .signin-card h1,
+body.dark .confirmation-page h1 { color: white; }
+
+body.dark .manage-header p,
+body.dark .post-header p,
+body.dark .signin-card > p,
+body.dark .home-hero p  { color: rgba(255,255,255,0.6); }
+
+body.dark .cart-item-name  { color: white; }
+body.dark .cart-item-seller,
+body.dark .cart-item-condition { color: rgba(255,255,255,0.6); }
+body.dark .cart-item-price { color: var(--gold); }
+body.dark .cart-divider    { background: #333; }
+body.dark .cart-summary-divider { background: #333; }
+
+body.dark .divider::before,
+body.dark .divider::after { background: #333; }
+
+body.dark .forgot-link { color: var(--gold); }
+
+body.dark .nav-links a { color: rgba(255,255,255,0.9); }
+
+body.dark .surface,
+body.dark .card-img { background: #2a2a2a; }
+
+body.dark .badge {
+  background: rgba(253,185,19,0.15);
+  color: var(--gold);
 }
 
-.dark .loading-overlay {
-  background: rgba(17, 24, 39, 0.88);
+body.dark .detail-badge {
+  background: rgba(253,185,19,0.15);
+  color: var(--gold);
 }
 
-.dark .skeleton-card,
-.dark .skeleton-img,
-.dark .skeleton-line {
+body.dark .confirmation-icon {
+  background: rgba(253,185,19,0.15);
+  color: var(--gold);
+}
+
+/* Loading overlay dark */
+body.dark .loading-overlay {
+  background: rgba(17,24,39,0.88);
+}
+
+body.dark .loading-overlay-label { color: white; }
+
+/* Skeleton dark */
+body.dark .skeleton-card,
+body.dark .skeleton-img,
+body.dark .skeleton-line {
   background-color: #374151;
-  background-image: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-image: linear-gradient(
+    90deg, #374151 25%, #4b5563 50%, #374151 75%
+  );
   background-size: 800px 100%;
 }
 
 /* ============================================
    20. DESKTOP MEDIA QUERIES
-   Everything above is mobile-first.
-   These rules kick in at 1024px and wider.
    ============================================ */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
 
-  .navbar {
-    padding: 0 40px;
-    height: 72px;
-  }
-
-  .nav-actions {
-    display: flex;
-  }
-
-  .hamburger {
-    display: none;
-  }
+  .nav-links   { display: flex; }
+  .nav-actions { display: flex; }
+  .hamburger   { display: none; }
 
   .btn-primary,
   .btn-secondary {
     display: inline-block;
     width: auto;
-  }
-
-  .form-row {
-    flex-direction: row;
-    gap: 20px;
-  }
-
-  .form-row .field-group {
-    flex: 1;
-  }
-
-  .home-hero {
-    padding: 120px 40px;
-  }
-
-  .home-hero h1 {
-    font-size: 42px;
   }
 
   .hero-buttons {
@@ -1441,61 +1451,36 @@ body.dark .order-total {
     max-width: none;
   }
 
-  .listings-page {
-    padding: 40px 80px;
-  }
-
-  .listings-page h1 {
-    font-size: 32px;
-    margin-bottom: 32px;
-  }
+  .listings-container { padding: 0 48px; }
 
   .listings-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 
-  .listings-container {
-      padding: 0 24px;
-  }
-
-  .card-img {
-    height: 200px;
-  }
-
   .detail-page {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
     gap: 64px;
-    padding: 48px 80px;
+    padding: 48px 48px;
     align-items: start;
   }
 
-  .detail-img {
-    height: 480px;
-  }
-
-  .detail-img-wrap {
-    margin-bottom: 0;
-  }
-
-  .detail-title {
-    font-size: 28px;
-  }
+  .detail-img     { height: 440px; }
+  .detail-img-wrap { margin-bottom: 0; }
+  .detail-title   { font-size: 1.75rem; }
 
   .detail-actions {
     flex-direction: row;
-    max-width: 400px;
+    max-width: 380px;
   }
 
   .post-page {
-    padding: 48px 80px;
+    padding: 48px 48px;
     max-width: 100%;
   }
 
-  .post-header h1 {
-    font-size: 32px;
-  }
+  .post-header h1 { font-size: 2rem; }
 
   .exchange-options {
     flex-direction: row;
@@ -1507,65 +1492,88 @@ body.dark .order-total {
     justify-content: flex-end;
   }
 
-  .form-actions .btn-secondary {
-    width: auto;
-    min-width: 120px;
+  .form-actions .btn-secondary { width: auto; min-width: 120px; }
+  .form-actions .btn-primary   { width: auto; min-width: 160px; }
+
+  .form-row {
+    flex-direction: row;
+    gap: 20px;
   }
 
-  .form-actions .btn-primary {
-    width: auto;
-    min-width: 160px;
-  }
+  .form-row .field-group { flex: 1; }
 
-  .checkout-page {
-    padding: 48px 80px;
-  }
+  .checkout-page { padding: 48px 48px; }
 
   .checkout-layout {
     flex-direction: row;
     align-items: flex-start;
   }
 
-  .checkout-form {
-    flex: 1.5;
-  }
+  .checkout-form  { flex: 1.5; }
 
   .order-summary {
     flex: 1;
     position: sticky;
-    top: 90px;
+    top: calc(var(--nav-h) + 16px);
   }
 
-  .checkout-actions {
+  .checkout-actions { flex-direction: row; }
+
+  .signin-page { padding: 80px 40px; }
+
+  .signin-actions {
     flex-direction: row;
   }
 
-  .signin-page {
-    padding: 80px 40px;
+  .signin-actions .btn-primary,
+  .signin-actions .btn-secondary {
+    flex: 1;
   }
 
-  .manage-page {
-    padding: 40px 80px;
+  .manage-page { padding: 40px 48px; }
+  .manage-header h1 { font-size: 2rem; }
+
+  .home-hero { padding: 100px 40px; }
+  .home-hero h1 { font-size: 2.625rem; }
+
+  .cart-layout {
+    flex-direction: row;
+    align-items: flex-start;
   }
 
-  .manage-header h1 {
-    font-size: 32px;
+  .cart-items { flex: 1.5; }
+  .cart-page  { padding: 40px 48px; }
+  .cart-page h1 { font-size: 2rem; }
+}
+
+@media (min-width: 1024px) {
+  .navbar { padding: 0 40px; }
+
+  .listings-container { padding: 0 80px; }
+
+  .listings-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .listings-container {
-          padding: 0 80px;
-      }
+  .detail-page { padding: 48px 80px; }
+  .post-page   { padding: 48px 80px; }
+  .checkout-page { padding: 48px 80px; }
+  .manage-page { padding: 40px 80px; }
+  .cart-page   { padding: 48px 80px; }
+
+  .section-title {
+    font-size: 1.75rem;
+    padding: 32px 48px 8px;
+  }
 }
 
 /* ============================================
    21. LOADING STATES
    ============================================ */
-
-/* --- Full-page loading overlay --- */
 .loading-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255,255,255,0.88);
   display: none;
   flex-direction: column;
   align-items: center;
@@ -1574,22 +1582,18 @@ body.dark .order-total {
   z-index: 9999;
 }
 
-.loading-overlay.visible {
-  display: flex;
-}
+.loading-overlay.visible { display: flex; }
 
-.loading-overlay-label {
-  font-size: 15px;
+.loading-overlay-label,
+.loading-text {
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--text-primary);
   margin-top: 8px;
 }
 
-/* --- Spinning circle (large, for overlay) --- */
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .spinner {
@@ -1601,7 +1605,6 @@ body.dark .order-total {
   animation: spin 0.75s linear infinite;
 }
 
-/* --- Button loading state --- */
 .btn-primary.btn-loading {
   color: transparent !important;
   pointer-events: none;
@@ -1615,23 +1618,18 @@ body.dark .order-total {
   margin: auto;
   width: 18px;
   height: 18px;
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #fff;
+  border: 3px solid rgba(255,255,255,0.4);
+  border-top-color: white;
   border-radius: 50%;
   animation: spin 0.75s linear infinite;
 }
 
-/* --- Skeleton card --- */
 @keyframes shimmer {
-  0% {
-    background-position: -400px 0;
-  }
-  100% {
-    background-position: 400px 0;
-  }
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
 }
 
-.skeleton-card {
+.card-skeleton {
   border-radius: 12px;
   overflow: hidden;
   background: #e5e7eb;
@@ -1640,7 +1638,9 @@ body.dark .order-total {
 .skeleton-img {
   width: 100%;
   height: 180px;
-  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background: linear-gradient(
+    90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%
+  );
   background-size: 800px 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
@@ -1655,127 +1655,106 @@ body.dark .order-total {
 .skeleton-line {
   height: 14px;
   border-radius: 6px;
-  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background: linear-gradient(
+    90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%
+  );
   background-size: 800px 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
 
-.skeleton-line.short {
-  width: 40%;
-}
-
-/* --- Real cards fade-in --- */
-.listings-grid.hidden {
-  display: none;
-}
+.skeleton-line.short { width: 40%; }
 
 .listings-grid.fade-in {
   animation: fadeIn 0.5s ease forwards;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* No results message inside search dropdown */
-.suggestion.no-results {
-  color: var(--text-secondary);
-  font-style: italic;
-  cursor: default;
-  padding: 14px 20px;
-}
-
-.suggestion.no-results:hover {
-  background: none;
-}
-
-/* Desktop nav links — Browse, Post, My Listings
-   Hidden on mobile since hamburger covers these */
-.nav-links {
-  display: none;
-  align-items: center;
-  gap: 24px;
-  flex-shrink: 0;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0.9;
-  transition: opacity 0.2s ease;
-}
-
-.nav-links a:hover {
-  opacity: 1;
-}
-
-@media (min-width: 768px) {
-  .nav-links {
-    display: flex;
-  }
-
-  .listings-container {
-          padding: 0 48px;
-      }
-
-  /* existing rules below unchanged */
-  .nav-actions {
-    display: flex;
-  }
-
-  .hamburger {
-    display: none;
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
-   REAL-TIME FORM VALIDATION STATES
-   Success border and message for valid fields.
-   Complements existing .error state.
+   22. MICRO-ANIMATIONS
    ============================================ */
-
-/* Green border when field is valid */
-.input-field.success {
-  border-color: var(--success);
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Success message — hidden until JS adds .visible */
-.success-msg {
-  color: var(--success);
+.suggestion { transition: background 0.15s ease; }
+
+.condition-btn { transition: all 0.2s ease; }
+
+.toggle-dot    { transition: transform 0.3s ease; }
+.toggle-pill   { transition: background 0.3s ease; }
+
+.search-dropdown { transition: opacity 0.15s ease; }
+
+/* ============================================
+   23. FOCUS STATES
+   Visible keyboard focus indicators.
+   Meets WCAG AA requirements.
+   Uses :focus-visible so mouse users
+   don't see the outline on click.
+   ============================================ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.toggle-pill:focus-visible,
+.card:focus-visible,
+.condition-btn:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Dark mode focus uses gold for visibility */
+body.dark a:focus-visible,
+body.dark button:focus-visible,
+body.dark input:focus-visible,
+body.dark textarea:focus-visible,
+body.dark select:focus-visible,
+body.dark .toggle-pill:focus-visible,
+body.dark .condition-btn:focus-visible {
+  outline-color: var(--gold);
+}
+
+/* Both icons sit on the dot */
+.toggle-sun,
+.toggle-moon {
   font-size: 13px;
-  margin-top: 4px;
-  display: none;
+  line-height: 1;
+  position: absolute;
+  transition: opacity 0.3s ease;
 }
 
-.success-msg.visible {
-  display: block;
+/* Make dot position:relative so icons center inside */
+.toggle-dot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Live character counter below description
-   and password fields */
-.field-counter {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-  transition: color 0.2s ease;
-}
-.success-msg {
-  color: var(--success);
-  font-size: 13px;
-  margin-top: 4px;
-  display: none;
+/* Light mode — sun visible, moon hidden */
+.toggle-sun  { opacity: 1; }
+.toggle-moon { opacity: 0; }
+
+/* Dark mode — moon visible, sun hidden */
+body.dark .toggle-sun  { opacity: 0; }
+body.dark .toggle-moon { opacity: 1; }
+
+/* Search icon on the left of the search bar */
+.nav-search-icon {
+  width: 16px;
+  height: 16px;
+  stroke: #767676;
+  flex-shrink: 0;
+  margin-left: 14px;
 }
 
-.success-msg.visible {
-  display: block;
+/* Adjust input padding so it doesn't overlap the icon */
+.nav-search input {
+  padding: 0 12px;
 }
