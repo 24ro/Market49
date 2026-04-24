@@ -7,26 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <style>.success-msg { color: #22c55e; font-size: 0.78rem; font-weight: 500; margin-top: 4px; display: none; }</style>
 </head>
 <body>
- 
+
 <!-- ======= LOADING OVERLAY ======= -->
 <div class="loading-overlay" id="loading-overlay">
     <div class="spinner"></div>
     <p class="loading-overlay-label">Posting your listing...</p>
 </div>
- 
+
+<!-- ======= SUCCESS TOAST ======= -->
+<div class="toast" id="post-toast">
+    &#10003; Your listing was posted successfully!
+</div>
+
+<!-- ======= NAV BAR ======= -->
 <nav class="navbar">
     <a href="index.html" class="logo">Market<span>49</span></a>
- 
-    <!-- Desktop nav links — hidden on mobile -->
     <div class="nav-links">
         <a href="listings.html">Browse</a>
         <a href="post-listing.html">Post a Listing</a>
         <a href="manage-listings.html">My Listings</a>
     </div>
-
     <div class="nav-search">
         <label for="search-input" style="display:none">Search</label>
         <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none"
@@ -63,7 +65,7 @@
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
 </nav>
- 
+
 <!-- ======= MOBILE MENU ======= -->
 <div class="mobile-menu" id="mobile-menu">
     <button class="close-menu" id="close-menu">&#10005;</button>
@@ -75,21 +77,18 @@
     <a href="signin.html">Sign In</a>
 </div>
 <div class="menu-overlay" id="menu-overlay"></div>
- 
+
 <!-- ======= PAGE CONTENT ======= -->
 <main class="post-page">
- 
+
     <div class="post-header">
         <h1>Post a Listing</h1>
         <p>Fill out the details below to list your item on Market49.</p>
     </div>
- 
+
     <form id="post-listing-form" class="post-form">
- 
-        <!-- Title and Price side by side on desktop,
-             stacked on mobile -->
+
         <div class="form-row">
- 
             <div class="field-group">
                 <label for="title">Title</label>
                 <input
@@ -99,11 +98,14 @@
                         placeholder="e.g. Calculus Textbook"
                         autocomplete="off"
                 >
-                <!-- Error shown by JS when field is empty on submit -->
-                <span id="title-error" class="error-msg">This field is required</span>
-                <span id="title-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                <span id="title-error" class="error-msg">
+                    Title is required
+                </span>
+                <span id="title-success" class="success-msg">
+                    &#10003; Looks good!
+                </span>
             </div>
- 
+
             <div class="field-group">
                 <label for="price">Price ($)</label>
                 <input
@@ -114,17 +116,21 @@
                         step="0.01"
                         placeholder="0.00"
                 >
-                <span id="price-error" class="error-msg">This field is required</span>
-                <span id="price-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+                <span id="price-error" class="error-msg">
+                    Price is required
+                </span>
+                <span id="price-success" class="success-msg">
+                    &#10003; Looks good!
+                </span>
             </div>
- 
         </div>
- 
-        <!-- Category dropdown -->
+
         <div class="field-group">
             <label for="category">Category</label>
             <select id="category" class="input-field">
-                <option value="" disabled selected>Select a category</option>
+                <option value="" disabled selected>
+                    Select a category
+                </option>
                 <option value="textbooks">Textbooks</option>
                 <option value="electronics">Electronics</option>
                 <option value="furniture">Furniture</option>
@@ -132,11 +138,14 @@
                 <option value="supplies">School Supplies</option>
                 <option value="other">Other</option>
             </select>
-            <span id="category-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+            <span id="category-error" class="error-msg">
+                Please select a category
+            </span>
+            <span id="category-success" class="success-msg">
+                &#10003; Looks good!
+            </span>
         </div>
- 
-        <!-- Photo upload area -->
-        <!-- Clicking the box triggers the hidden file input -->
+
         <div class="field-group">
             <label>Photo</label>
             <div
@@ -144,14 +153,9 @@
                     id="upload-box"
                     onclick="document.getElementById('file-input').click()"
             >
-                 <span id="photo-error" class="error-msg">A photo is required </span>
- 
-                <!-- Icon and label inside upload box -->
                 <div class="upload-icon">&#128247;</div>
                 <p class="upload-label">Click to upload a photo</p>
                 <p class="upload-hint">JPG, PNG up to 10MB</p>
- 
-                <!-- Hidden — clicking upload-box triggers this -->
                 <input
                         type="file"
                         id="file-input"
@@ -159,16 +163,18 @@
                         hidden
                 >
             </div>
-            <!-- File name shown here after user picks a file -->
             <p class="upload-name" id="upload-name"></p>
-            <span id="photo-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+            <span id="photo-error" class="error-msg">
+                A photo is required
+            </span>
+            <span id="photo-success" class="success-msg">
+                &#10003; Photo selected!
+            </span>
         </div>
- 
-        <!-- Condition selector — pill buttons -->
+
         <div class="field-group">
             <label>Condition</label>
             <div class="condition-options">
-                <!-- JS handles the active state on these buttons -->
                 <button type="button" class="condition-btn active"
                         data-value="new">New</button>
                 <button type="button" class="condition-btn"
@@ -179,8 +185,7 @@
                         data-value="fair">Fair</button>
             </div>
         </div>
- 
-        <!-- Description text area -->
+
         <div class="field-group">
             <label for="description">Description</label>
             <textarea
@@ -189,11 +194,17 @@
                     rows="5"
                     placeholder="Describe your item — include details like edition, brand, or any wear..."
             ></textarea>
-            <span id="desc-error" class="error-msg">This field is required</span>
-            <span id="desc-success" class="success-msg" style="display:none">&#10003; Looks good!</span>
+            <span id="desc-counter" class="field-counter">
+                0 / 20 minimum
+            </span>
+            <span id="desc-error" class="error-msg">
+                Description is required
+            </span>
+            <span id="desc-success" class="success-msg">
+                &#10003; Looks good!
+            </span>
         </div>
- 
-        <!-- Pickup / delivery preference -->
+
         <div class="field-group">
             <label>Preferred Exchange Method</label>
             <div class="exchange-options">
@@ -203,89 +214,40 @@
                     <span>Local Pickup</span>
                 </label>
                 <label class="exchange-option">
-                    <input type="radio" name="exchange" value="delivery">
+                    <input type="radio" name="exchange"
+                           value="delivery">
                     <span>Delivery</span>
                 </label>
                 <label class="exchange-option">
-                    <input type="radio" name="exchange" value="both">
+                    <input type="radio" name="exchange"
+                           value="both">
                     <span>Either</span>
                 </label>
             </div>
         </div>
- 
-        <!-- Form action buttons -->
+
         <div class="form-actions">
-            <!-- Submit triggers validation in post-listing.js -->
-            <button type="submit" class="btn-primary">Post Listing</button>
-            <!-- Cancel goes back without saving -->
-            <a href="listings.html" class="btn-secondary">Cancel</a>
+            <button type="submit" class="btn-primary">
+                Post Listing
+            </button>
+            <a href="listings.html" class="btn-secondary">
+                Cancel
+            </a>
         </div>
- 
+
     </form>
- 
+
 </main>
- 
+
 <!-- ======= FOOTER ======= -->
 <footer>
     <p>Help Center | Contact | Sign In | FAQs |
         Terms of Service | Privacy Policy</p>
     <p>© 2026 Market49</p>
 </footer>
- 
+
 <script src="js/main.js"></script>
- 
-<script>
-(function () {
-  // Generic text/number/textarea: show success on blur if non-empty
-  var textFields = [
-    { input: 'title',       success: 'title-success',    error: 'title-error' },
-    { input: 'price',       success: 'price-success',    error: 'price-error' },
-    { input: 'description', success: 'desc-success',     error: 'desc-error'  },
-  ];
-  textFields.forEach(function (f) {
-    var el = document.getElementById(f.input);
-    var ok = document.getElementById(f.success);
-    var err = document.getElementById(f.error);
-    if (!el || !ok) return;
-    el.addEventListener('blur', function () {
-      if (el.value.trim() !== '') {
-        ok.style.display = 'inline';
-        if (err) err.style.display = 'none';
-      } else {
-        ok.style.display = 'none';
-      }
-    });
-    el.addEventListener('input', function () {
-      if (el.value.trim() === '') ok.style.display = 'none';
-    });
-  });
- 
-  // Category select
-  var cat = document.getElementById('category');
-  var catOk = document.getElementById('category-success');
-  if (cat && catOk) {
-    cat.addEventListener('change', function () {
-      catOk.style.display = cat.value ? 'inline' : 'none';
-    });
-  }
- 
-  // Photo file input
-  var fileInput = document.getElementById('file-input');
-  var photoOk = document.getElementById('photo-success');
-  var photoErr = document.getElementById('photo-error');
-  if (fileInput && photoOk) {
-    fileInput.addEventListener('change', function () {
-      if (fileInput.files && fileInput.files.length > 0) {
-        photoOk.style.display = 'inline';
-        if (photoErr) photoErr.style.display = 'none';
-      } else {
-        photoOk.style.display = 'none';
-      }
-    });
-  }
-})();
-</script>
- 
+
 </body>
 </html>
 

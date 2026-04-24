@@ -40,7 +40,7 @@
   --text-secondary: #595959; /* was #666 — updated to pass WCAG AA */
   --text-muted:     #595959;
   --error:          #D32F2F;
-  --success:        #2E7D32;
+  --success:        #1B5E20;
   --dark-bg:        #121212;
   --dark-surface:   #1E1E1E;
   --radius-sm:      8px;
@@ -1757,4 +1757,31 @@ body.dark .toggle-moon { opacity: 1; }
 /* Adjust input padding so it doesn't overlap the icon */
 .nav-search input {
   padding: 0 12px;
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   Slides in from top after successful action.
+   Auto-dismisses before navigating away.
+   ============================================ */
+.toast {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--success);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  z-index: 99999;
+  white-space: nowrap;
+  transition: top 0.4s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.toast.visible {
+  top: 24px;
 }
