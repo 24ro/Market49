@@ -583,12 +583,16 @@ footer {
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              border-color 0.2s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+  /* Green border appears on hover */
+  border-color: var(--green);
 }
 
 .card-img {
@@ -1314,6 +1318,10 @@ body.dark .input-field:focus {
 
 body.dark .card {
   background: var(--dark-surface);
+}
+
+body.dark .card:hover {
+  border-color: var(--gold);
 }
 
 body.dark .card-name  { color: var(--gold); }
