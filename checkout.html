@@ -17,7 +17,7 @@
 </div>
 
 <!-- ======= NAV BAR ======= -->
-<nav class="navbar">
+<nav class="navbar" aria-label="Main navigation">
     <a href="index.html" class="logo">Market<span>49</span></a>
 
     <!-- Desktop nav links — hidden on mobile -->
@@ -54,26 +54,39 @@
             </svg>
         </a>
         <a href="signin.html">Sign In</a>
-        <div class="toggle-pill" id="dark-toggle">
+        <div class="toggle-pill" id="dark-toggle"
+             role="switch"
+             aria-checked="false"
+             aria-label="Toggle dark mode"
+             tabindex="0">
             <div class="toggle-dot">
                 <span class="toggle-sun">&#9728;</span>
                 <span class="toggle-moon">&#9790;</span>
             </div>
         </div>
     </div>
-    <button class="hamburger" id="hamburger">&#9776;</button>
+    <button class="hamburger" id="hamburger"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu">
+        &#9776;
+    </button>
 </nav>
 
 <!-- ======= MOBILE MENU ======= -->
-<div class="mobile-menu" id="mobile-menu">
-    <button class="close-menu" id="close-menu">&#10005;</button>
+<nav class="mobile-menu" id="mobile-menu"
+     aria-label="Mobile navigation">
+    <button class="close-menu" id="close-menu"
+            aria-label="Close navigation menu">
+        &#10005;
+    </button>
     <a href="index.html">Home</a>
     <a href="listings.html">Browse Listings</a>
     <a href="cart.html">Cart</a>
     <a href="post-listing.html">Post a Listing</a>
     <a href="manage-listings.html">My Listings</a>
     <a href="signin.html">Sign In</a>
-</div>
+</nav>
 <div class="menu-overlay" id="menu-overlay"></div>
 
 <!-- ======= PAGE CONTENT ======= -->

@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==========================================
   // 1. HAMBURGER MENU
+  // aria-expanded tracks open/closed state
+  // for screen readers
   // ==========================================
 
   const hamburger = document.getElementById('hamburger');
@@ -26,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenu.classList.add('open');
       menuOverlay.classList.add('visible');
       document.body.style.overflow = 'hidden';
+      // Tell screen readers the menu is now open
+      hamburger.setAttribute('aria-expanded', 'true');
     });
   }
 
@@ -42,10 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenu) mobileMenu.classList.remove('open');
     if (menuOverlay) menuOverlay.classList.remove('visible');
     document.body.style.overflow = '';
+    // Tell screen readers the menu is now closed
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
   }
 
   // ==========================================
   // 2. DARK MODE TOGGLE
+  // aria-checked tracks on/off state for
+  // screen readers since toggle uses role=switch
   // ==========================================
 
   const toggle = document.getElementById('dark-toggle');
@@ -53,7 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (savedMode === 'true') {
     document.body.classList.add('dark');
-    if (toggle) toggle.classList.add('active');
+    if (toggle) {
+      toggle.classList.add('active');
+      // Reflect saved state in aria-checked on load
+      toggle.setAttribute('aria-checked', 'true');
+    }
+  } else {
+    if (toggle) toggle.setAttribute('aria-checked', 'false');
   }
 
   if (toggle) {
@@ -61,7 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.toggle('dark');
       const isDark = document.body.classList.contains('dark');
       toggle.classList.toggle('active', isDark);
+      // Keep aria-checked in sync with actual state
+      toggle.setAttribute('aria-checked', isDark.toString());
       localStorage.setItem('darkMode', isDark);
+    });
+
+    // Allow keyboard activation of toggle with Enter/Space
+    // since it uses role=switch instead of a button
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle.click();
+      }
     });
   }
 
@@ -364,7 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Full name — letters only, two words, each min 2 chars
     function validateName() {
       const input = document.getElementById('full-name');
       if (!input) return true;
@@ -390,7 +414,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('full-name', validateName);
 
-    // Contact — valid email or exactly 10-digit phone
     function validateContact() {
       const input = document.getElementById('contact');
       if (!input) return true;
@@ -413,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('contact', validateContact);
 
-    // Street address — required, min 5 characters
     function validateAddress() {
       const input = document.getElementById('address');
       if (!input) return true;
@@ -433,7 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('address', validateAddress);
 
-    // City — letters only, min 2 characters
     function validateCity() {
       const input = document.getElementById('city');
       if (!input) return true;
@@ -453,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('city', validateCity);
 
-    // State — letters only, min 2 characters
     function validateState() {
       const input = document.getElementById('state');
       if (!input) return true;
@@ -473,7 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('state', validateState);
 
-    // ZIP — exactly 5 digits
     const zipInput = document.getElementById('zip');
     if (zipInput) {
       zipInput.addEventListener('input', () => {
@@ -504,7 +523,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // Card number — exactly 16 digits, auto-formats
     const cardInput = document.getElementById('card-number');
     if (cardInput) {
       cardInput.addEventListener('input', () => {
@@ -536,7 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // Expiry — valid MM/YY, not expired
     const expiryInput = document.getElementById('expiry');
     if (expiryInput) {
       expiryInput.addEventListener('input', () => {
@@ -586,7 +603,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // CVC — exactly 3 digits
     const cvcInput = document.getElementById('cvc');
     if (cvcInput) {
       cvcInput.addEventListener('input', () => {
@@ -617,7 +633,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     }
 
-    // Name on card — letters only, min 2 characters
     function validateCardName() {
       const input = document.getElementById('card-name');
       if (!input) return true;
@@ -637,7 +652,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     attachListeners('card-name', validateCardName);
 
-    // Submit — marks all touched then runs all validators
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
